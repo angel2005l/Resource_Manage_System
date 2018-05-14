@@ -3,5 +3,14 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-  <display-name></display-name>
+	<display-name></display-name>
+
+	<servlet>
+		<servlet-name>IndexController</servlet-name>
+		<servlet-class>com.xinhai.controller.IndexController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IndexController</servlet-name>
+		<url-pattern>/test</url-pattern>
+	</servlet-mapping>
 </web-app>
