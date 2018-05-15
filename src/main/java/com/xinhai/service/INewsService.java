@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.xinhai.entity.Article;
 import com.xinhai.entity.ArticleType;
+import com.xinhai.util.Result;
 
 public interface INewsService {
 
@@ -13,40 +14,40 @@ public interface INewsService {
 	 */
 
 	// 新增新闻类型
-	public int insNewsType(ArticleType data) throws Exception;
+	public Result<Object> insNewsType(ArticleType data) throws Exception;
 
 	// 查询新闻类型信息
-	public List<ArticleType> selNewsTypes() throws Exception;
+	public Result<List<ArticleType>> selNewsTypes() throws Exception;
 
 	// 查询除了特定id以外的所有的 分类名和id
-	public List<Map<String, Object>> selNewsTypeIdAndTypeName(String id) throws Exception;
+	public Result<List<Map<String, Object>>> selNewsTypeIdAndTypeName(String id) throws Exception;
 
 	// 查询特定id的新闻类型
-	public ArticleType selNewsTypeById(String id) throws Exception;
+	public Result<ArticleType> selNewsTypeById(String id) throws Exception;
 
 	// 修改新闻类型
-	public int uptNewsType(ArticleType at) throws Exception;
+	public Result<Object> uptNewsType(ArticleType data) throws Exception;
 
 	// 删除新闻类型
-	public int delNewsType(String id) throws Exception;
+	public Result<Object> delNewsType(String id) throws Exception;
 
 	/*
 	 * 新闻部分
 	 */
 
 	// 新增新闻
-	public int insNews(Article data) throws Exception;
+	public Result<Object> insNews(Article data) throws Exception;
 
 	// 查询信息
-	public List<Article> selNews() throws Exception;
+	public Result<List<Article>> selNews() throws Exception;
 
 	// 查询特定新闻
-	public Article selNewsById(String id) throws Exception;
+	public Result<Article> selNewsById(String id) throws Exception;
 
 	// 修改新闻
-	public int uptNews(Article at) throws Exception;
+	public Result<Object> uptNews(Article data) throws Exception;
 
 	// 删除新闻
-	public int delNews(String id) throws Exception;
+	public Result<Object> delNews(String id) throws Exception;
 
 }
