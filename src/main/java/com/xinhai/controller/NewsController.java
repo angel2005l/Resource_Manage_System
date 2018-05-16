@@ -99,7 +99,6 @@ public class NewsController extends HttpServlet {
 	 */
 	private void selNewsType(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			Result<List<ArticleType>> selNewsTypes = service.selNewsTypes();
 			request.setAttribute("result", selNewsTypes);

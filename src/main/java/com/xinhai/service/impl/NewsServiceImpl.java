@@ -122,7 +122,6 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 	public Result<Object> insNews(Article data) throws Exception {
 		String url = rb.getString("news_ins");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("id", data.getId() + ""));
 		params.add(new BasicNameValuePair("title", data.getTitle()));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("content", data.getContent()));
