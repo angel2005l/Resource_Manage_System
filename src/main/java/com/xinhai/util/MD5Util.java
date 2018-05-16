@@ -1,17 +1,15 @@
 package com.xinhai.util;
 
 import java.security.MessageDigest;
+
 /**
- * 
- * @Title: MD5.java
- * @Description: MD5加密工具类
- * @Copyright: Copyright (c) 2018
- * @Company: 新海集团
+ * @project 大数据api
+ * @date 2017.12.23
  * @author 胡冬冬
- * @date 2018年4月17日
- * @version 1.0.0
+ * @version DEMO 0.0.1
+ * @introduce MD5加密工具类
  */
-public class MD5 {
+public class MD5Util {
 
 	public static String md5(String str) {
 		try {
