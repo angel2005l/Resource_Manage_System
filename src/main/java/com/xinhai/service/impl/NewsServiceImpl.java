@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xinhai.base.BaseResult;
 import com.xinhai.entity.Article;
 import com.xinhai.entity.ArticleType;
 import com.xinhai.service.INewsService;
@@ -17,8 +18,6 @@ import com.xinhai.util.DateUtil;
 import com.xinhai.util.HttpClientUtil;
 import com.xinhai.util.Result;
 import com.xinhai.util.StrUtil;
-
-import base.BaseResult;
 
 public class NewsServiceImpl extends BaseResult implements INewsService {
 	private ResourceBundle rb = ResourceBundle.getBundle("daoApi");

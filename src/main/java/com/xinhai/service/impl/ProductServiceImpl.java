@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xinhai.base.BaseResult;
 import com.xinhai.entity.Product;
 import com.xinhai.entity.ProductImg;
 import com.xinhai.entity.ProductType;
@@ -17,8 +18,6 @@ import com.xinhai.service.IProductService;
 import com.xinhai.util.DateUtil;
 import com.xinhai.util.HttpClientUtil;
 import com.xinhai.util.Result;
-
-import base.BaseResult;
 
 public class ProductServiceImpl extends BaseResult implements IProductService {
 	private ResourceBundle rb = ResourceBundle.getBundle("daoApi");
@@ -113,7 +112,6 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 			return rtnSuccessResult("", list);
 		}
 		return rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
-
 	}
 
 	@Override
@@ -208,6 +206,24 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		int code = jb.getIntValue("code");
 		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("添加产品图片成功")
 				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "添加产品图片失败" : jb.getString("msg"));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Result<List<Map<String, Object>>> selProductIdAndProductName() throws Exception {
+		String url = rb.getString("product_id_productName");
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		String resultJson = HttpClientUtil.getPostDefault(url, params);
+		JSONObject jb = JSON.parseObject(resultJson);
+		if (0 == jb.getIntValue("code")) {
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			for (Object object : JSON.parseArray(jb.getString("data"))) {
+				Map<String, Object> ret = (Map<String, Object>) object;
+				list.add(ret);
+			}
+			return rtnSuccessResult("", list);
+		}
+		return rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
 	}
 
 	@Override

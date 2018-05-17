@@ -35,6 +35,8 @@ public interface IProductService {
 
 	public Result<Object> delProduct(String id) throws Exception;
 
+	public Result<List<Map<String, Object>>> selProductIdAndProductName() throws Exception;
+
 	// 产品图片管理
 	public Result<Object> insProductImg(ProductImg data) throws Exception;
 

@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +73,9 @@ public class ProductController extends HttpServlet {
 			break;
 		case "product_del":
 			delProduct(req, resp);
+			break;
+		case "product_id_productName":
+			selProductIdAndProductName(req, resp);
 			break;
 		case "product_img_ins":
 			break;
@@ -290,7 +292,6 @@ public class ProductController extends HttpServlet {
 		String status = request.getParameter("status");
 		String sort = request.getParameter("sort");
 		String json = "";
-
 		try {
 			Product data = new Product();
 			data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
@@ -305,6 +306,13 @@ public class ProductController extends HttpServlet {
 
 			Result<Object> insProduct = service.insProduct(data);
 			json = JSON.toJSONString(insProduct);
+			// } catch (QiniuException e) {
+			// Response errorReq = e.response;
+			// errorReq.getInfo();
+			// json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
+			// "产品图片上传失败"));
+			// log.error("添加产品信息（七牛图片上传）失败,失败原因:【" + errorReq.getInfo() + "】");
+
 		} catch (Exception e) {
 			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品信息异常"));
 			log.error("添加产品信息异常,异常原因:【" + e.toString() + "】");
@@ -428,6 +436,41 @@ public class ProductController extends HttpServlet {
 		}
 		returnData(json, response);
 	}
+
+	/**
+	 * 
+	 * @Title: selProductIdAndProductName
+	 * @Description: 查询所有产品的id_productName 键值对
+	 * @param request
+	 * @param response
+	 * @author: MR.H
+	 * @return: void
+	 * @throws IOException 
+	 *
+	 */
+	private void selProductIdAndProductName(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		String json = "";
+		try {
+			Result<List<Map<String, Object>>> selProductIdAndProductNameNoBound = service
+					.selProductIdAndProductName();
+			json = JSON.toJSONString(selProductIdAndProductNameNoBound);
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "查询所有产品的键值对异常"));
+			log.error("查询所有产品的键值对异常,异常原因:【" + e.toString() + "】");
+		}
+		returnData(json, response);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * 统一返回json格式对象

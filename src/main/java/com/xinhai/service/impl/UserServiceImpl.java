@@ -9,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xinhai.base.BaseResult;
 import com.xinhai.entity.User;
 import com.xinhai.service.IUserService;
 import com.xinhai.util.HttpClientUtil;
@@ -16,7 +17,6 @@ import com.xinhai.util.MD5Util;
 import com.xinhai.util.Result;
 import com.xinhai.util.StrUtil;
 
-import base.BaseResult;
 
 public class UserServiceImpl extends BaseResult implements IUserService {
 	private ResourceBundle rb = ResourceBundle.getBundle("daoApi");
