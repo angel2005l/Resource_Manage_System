@@ -25,10 +25,21 @@ public class ProductController extends HttpServlet {
 		super.doPost(req, resp);
 	}
 
+	
+	
+	
 	/*
-	 * 产品管理
+	 *  产品分类管理
+	 *  
+	 *  幸甚至哉，歌以咏志
 	 */
-	// 产品分类管理
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -37,5 +48,12 @@ public class ProductController extends HttpServlet {
 
 	// 产品
 	// CURD
+
+	
+	
+	
+	
+	
+	
 
 }

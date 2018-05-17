@@ -21,7 +21,7 @@ import com.xinhai.util.StrUtil;
 import base.BaseResult;
 
 public class NewsServiceImpl extends BaseResult implements INewsService {
-	private ResourceBundle rb = ResourceBundle.getBundle("daoApi.properties");
+	private ResourceBundle rb = ResourceBundle.getBundle("daoApi");
 
 	@Override
 	public Result<Object> insNewsType(ArticleType data) throws Exception {
@@ -173,7 +173,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("content", data.getContent()));
 		params.add(new BasicNameValuePair("main_content", data.getMain_content()));
-//		params.add(new BasicNameValuePair("manager_id", data.getManager_id()));
+		// params.add(new BasicNameValuePair("manager_id", data.getManager_id()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
