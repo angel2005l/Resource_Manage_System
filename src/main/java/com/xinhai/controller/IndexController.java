@@ -14,9 +14,6 @@ public class IndexController extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int maxWaitNum = 0;
-	private int maxGoNum = 0;
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -37,32 +34,26 @@ public class IndexController extends HttpServlet {
 	private void login() {
 		// 跳转主页
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
-//	public void addPeople(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		req.setAttribute("maxPeople", "当前最大排队数" + (++maxWaitNum));
-//		req.getRequestDispatcher("showMax.jsp").forward(req, resp);
-//	}
-//
-//	public void nextPeople(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		String msg = "";
-//		String winNo = req.getParameter("winNo");
-//		if (maxWaitNum < (maxGoNum + 1)) {
-//			msg = "等待中";
-//		} else {
-//			++maxGoNum;
-//			msg = "请" + maxGoNum + "到" + winNo + "窗口排队";
-//		}
-//		req.setAttribute("winNo", winNo);
-//		req.setAttribute("winPeo", msg);
-//		req.getRequestDispatcher("showGo.jsp").forward(req, resp);
-//	}
+	// public void addPeople(HttpServletRequest req, HttpServletResponse resp)
+	// throws ServletException, IOException {
+	// req.setAttribute("maxPeople", "当前最大排队数" + (++maxWaitNum));
+	// req.getRequestDispatcher("showMax.jsp").forward(req, resp);
+	// }
+	//
+	// public void nextPeople(HttpServletRequest req, HttpServletResponse resp)
+	// throws ServletException, IOException {
+	// String msg = "";
+	// String winNo = req.getParameter("winNo");
+	// if (maxWaitNum < (maxGoNum + 1)) {
+	// msg = "等待中";
+	// } else {
+	// ++maxGoNum;
+	// msg = "请" + maxGoNum + "到" + winNo + "窗口排队";
+	// }
+	// req.setAttribute("winNo", winNo);
+	// req.setAttribute("winPeo", msg);
+	// req.getRequestDispatcher("showGo.jsp").forward(req, resp);
+	// }
 
 }

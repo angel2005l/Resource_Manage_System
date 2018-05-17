@@ -37,6 +37,8 @@ public interface IProductService {
 
 	public Result<List<ProductImg>> selProductImg() throws Exception;
 
+	public Result<List<ProductImg>> selProductionImgByProId(String proId) throws Exception;
+
 	public Result<ProductImg> selProductImgById(String id) throws Exception;
 
 	public Result<Object> uptProductImg(ProductImg data) throws Exception;
