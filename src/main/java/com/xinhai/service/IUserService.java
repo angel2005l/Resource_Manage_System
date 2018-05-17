@@ -5,8 +5,8 @@ import com.xinhai.util.Result;
 
 public interface IUserService {
 
-	public Result<User> login(String account) throws Exception;
+	public Result<User> login(String account, String password) throws Exception;
 
-	public Result<Object> uptPassWord(String id, String oldPassword, String newPassword) throws Exception;
+	public Result<Object> uptPassWord(String id, String newPassword) throws Exception;
 
 }
