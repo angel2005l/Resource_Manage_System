@@ -1,6 +1,7 @@
 package com.xinhai.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.qiniu.common.QiniuException;
+import com.qiniu.http.Response;
+import com.qiniu.storage.model.DefaultPutRet;
+import com.xinhai.base.Constant;
 import com.xinhai.entity.Product;
+import com.xinhai.entity.ProductImg;
 import com.xinhai.entity.ProductType;
 import com.xinhai.service.IProductService;
 import com.xinhai.service.impl.ProductServiceImpl;
+import com.xinhai.util.DateUtil;
+import com.xinhai.util.IOUtil;
+import com.xinhai.util.QniuUtil;
 import com.xinhai.util.Result;
 import com.xinhai.util.StrUtil;
 
@@ -78,6 +88,7 @@ public class ProductController extends HttpServlet {
 			selProductIdAndProductName(req, resp);
 			break;
 		case "product_img_ins":
+			insProductImg(req, resp);
 			break;
 		case "product_img_sel":
 			break;
@@ -306,13 +317,6 @@ public class ProductController extends HttpServlet {
 
 			Result<Object> insProduct = service.insProduct(data);
 			json = JSON.toJSONString(insProduct);
-			// } catch (QiniuException e) {
-			// Response errorReq = e.response;
-			// errorReq.getInfo();
-			// json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
-			// "产品图片上传失败"));
-			// log.error("添加产品信息（七牛图片上传）失败,失败原因:【" + errorReq.getInfo() + "】");
-
 		} catch (Exception e) {
 			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品信息异常"));
 			log.error("添加产品信息异常,异常原因:【" + e.toString() + "】");
@@ -461,16 +465,60 @@ public class ProductController extends HttpServlet {
 		}
 		returnData(json, response);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * 
+	 * @Title: insProductImg   
+	 * @Description: 添加产品图片
+	 * @param request
+	 * @param response
+	 * @author: MR.H
+	 * @return: void
+	 * @throws IOException 
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	private void insProductImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String json = "";
+		String prefixProductImg = Constant.PREFIXPRODUCTIMG;
+
+		try {
+			Map<String, Object> multipartData = IOUtil.getMultipartData2Bean(request, ProductImg.class);
+			List<InputStream> streams = (List<InputStream>) multipartData.get("stream");
+			ProductImg data = (ProductImg) multipartData.get("formField");
+			for (InputStream inputStream : streams) {
+				DefaultPutRet uploadImg;
+				uploadImg = QniuUtil.uploadImg(inputStream, prefixProductImg + data.getPid() + "_" + DateUtil
+						.curDateYMDHMSSForService());
+				ProductImg tempData = IOUtil.deepClone(data);
+				tempData.setImg_url(uploadImg.key);
+				Result<Object> result = service.insProductImg(tempData);
+				json = JSON.toJSONString(result);
+				if (result.getCode() != 0) {
+					break;
+				}
+			}
+		} catch (QiniuException e) {
+			Response errorResp = e.response;
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
+					"添加产品图片（七牛图片上传）异常"));
+			log.error("添加产品图片（七牛图片上传）失败,失败原因:【" + errorResp.getInfo() + "】");
+		} catch (IOException e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
+					"添加产品图片（文件解析）异常"));
+			log.error("添加产品图片（文件解析）异常,异常原因:【" + e.toString() + "】");
+		} catch (FileUploadException e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
+					"添加产品图片（文件上传）异常"));
+			log.error("添加产品图片（文件上传）异常,异常原因:【" + e.toString() + "】");
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
+					"添加产品图片异常"));
+			log.error("添加产品图片异常,异常原因:【" + e.toString() + "】");
+		}
+
+		returnData(json, response);
+	}
 
 	/**
 	 * 统一返回json格式对象

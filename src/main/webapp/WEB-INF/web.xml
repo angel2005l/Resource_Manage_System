@@ -13,4 +13,12 @@
 		<servlet-name>IndexController</servlet-name>
 		<url-pattern>/test</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>ProductController</servlet-name>
+		<servlet-class>com.xinhai.controller.ProductController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProductController</servlet-name>
+		<url-pattern>/img</url-pattern>
+	</servlet-mapping>
 </web-app>

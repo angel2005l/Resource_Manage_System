@@ -1,6 +1,12 @@
 package com.xinhai.entity;
 
-public class ProductImg {
+import java.io.Serializable;
+
+public class ProductImg implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private int pid;
 	private String img_url;

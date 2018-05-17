@@ -1,9 +1,11 @@
 package com.xinhai.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,14 +116,13 @@ public class IOUtil {
 	 * @Description: 根据二进制流表单提交获得文件上传控件的输入流对象
 	 * @param request
 	 * @return
-	 * @throws FileNotFoundException
 	 * @throws FileUploadException
 	 * @author: MR.H
 	 * @return: List<InputStream>
+	 * @throws IOException 
 	 *
 	 */
-	public static List<InputStream> getFileStreams(HttpServletRequest request) throws FileNotFoundException,
-			FileUploadException {
+	public static List<InputStream> getFileStreams(HttpServletRequest request) throws FileUploadException, IOException {
 		// 实例化文件上传组件对象
 		FileItemFactory fif = new DiskFileItemFactory();
 		ServletFileUpload sfu = new ServletFileUpload(fif);
@@ -134,8 +135,83 @@ public class IOUtil {
 				continue;
 			}
 			// FileInputStream in = new FileInputStream(new File(fi.getName()));
-			list.add(new FileInputStream(new File(fi.getName())));
+			list.add(fi.getInputStream());
 		}
 		return list;
+	}
+
+	public static Map<String, Object> getMultipartData(HttpServletRequest request) throws IOException,
+			FileUploadException {
+		FileItemFactory fif = new DiskFileItemFactory();
+		ServletFileUpload sfu = new ServletFileUpload(fif);
+		List<InputStream> list = new ArrayList<InputStream>();
+		Map<String, String> map = new HashMap<String, String>();
+		if (!ServletFileUpload.isMultipartContent(request)) {
+			return null;
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		for (FileItem fi : sfu.parseRequest(request)) {
+			if (fi.isFormField()) {
+				map.put(fi.getFieldName(), new String(fi.getString().getBytes("ISO-8859-1"), "UTF-8"));
+			} else {
+				list.add(fi.getInputStream());
+			}
+		}
+		data.put("stream", list);
+		data.put("formField", map);
+		return data;
+	}
+
+	public static <T> Map<String, Object> getMultipartData2Bean(HttpServletRequest request, Class<T> clazz)
+			throws IOException, FileUploadException {
+		FileItemFactory fif = new DiskFileItemFactory();
+		ServletFileUpload sfu = new ServletFileUpload(fif);
+		List<InputStream> list = new ArrayList<InputStream>();
+		Map<String, String> map = new HashMap<String, String>();
+		if (!ServletFileUpload.isMultipartContent(request)) {
+			return null;
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		for (FileItem fi : sfu.parseRequest(request)) {
+			if (fi.isFormField()) {
+				map.put(fi.getFieldName(), new String(fi.getString().getBytes("ISO-8859-1"), "UTF-8"));
+			} else {
+				list.add(fi.getInputStream());
+			}
+		}
+		data.put("stream", list);
+		data.put("formField", null == map || map.isEmpty() ? null
+				: JSON.parseObject(JSON.toJSONString(map), clazz));
+		return data;
+	}
+
+	/**
+	 * 
+	 * @Title: deepClone   
+	 * @Description: 深度克隆（禁止抄袭！）
+	 * @param obj
+	 * @return
+	 * @author: 黄官易
+	 * @return: T
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T deepClone(Object obj) {
+		if (null == obj) {
+			return null;
+		}
+		// 将对象写入流中
+		ByteArrayOutputStream bo = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream oo = new ObjectOutputStream(bo);
+			oo.writeObject(obj);
+			// 将对象从流中读出来
+			ByteArrayInputStream bi = new ByteArrayInputStream(bo.toByteArray());
+			ObjectInputStream oi = new ObjectInputStream(bi);
+			return (T) oi.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			// log.error("IO工具类【deepClone】方法异常,异常原因:" + e.getMessage());
+			return null;
+		}
 	}
 }
