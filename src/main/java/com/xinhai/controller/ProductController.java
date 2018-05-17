@@ -1,6 +1,7 @@
 package com.xinhai.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -60,14 +61,19 @@ public class ProductController extends HttpServlet {
 			selProductTypeIdAndTypeName(req, resp);
 			break;
 		case "product_ins":
+			insProduct(req, resp);
 			break;
 		case "product_sel":
+			selProduct(req, resp);
 			break;
 		case "product_sel_id":
+			selProductById(req, resp);
 			break;
 		case "product_upt":
+			uptProduct(req, resp);
 			break;
 		case "product_del":
+			delProduct(req, resp);
 			break;
 		case "product_img_ins":
 			break;
@@ -111,17 +117,17 @@ public class ProductController extends HttpServlet {
 		String sort = request.getParameter("sort");
 		String json = "";
 
-		ProductType data = new ProductType();
-
-		data.setFid(StrUtil.isBlank(fid) ? 0 : Integer.parseInt(fid));
-		data.setType_name(typeName);
-		data.setType_ico(typeIco);
-		data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
-		data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
-
 		try {
+			ProductType data = new ProductType();
+			data.setFid(StrUtil.isBlank(fid) ? 0 : Integer.parseInt(fid));
+			data.setType_name(typeName);
+			data.setType_ico(typeIco);
+			data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
+			data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
 			Result<Object> insProductType = service.insProductType(data);
 			json = JSON.toJSONString(insProductType);
+		} catch (NumberFormatException e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_4000, "参数错误"));
 		} catch (Exception e) {
 			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品分类异常"));
 			log.error("添加产品分类异常,异常原因:【" + e.toString() + "】");
@@ -172,6 +178,7 @@ public class ProductController extends HttpServlet {
 			request.setAttribute("data", selProductTypeById);
 
 		} catch (Exception e) {
+			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品信息异常"));
 			log.error("查询特定的产品信息异常,异常原因:【" + e.toString() + "】");
 		}
 		request.getRequestDispatcher("view/productType/editLayout.jsp").forward(request, response);
@@ -262,7 +269,17 @@ public class ProductController extends HttpServlet {
 		returnData(json, response);
 	}
 
-	private void insProduct(HttpServletRequest request, HttpServletResponse response) {
+	/**
+	 * 添加产品信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月17日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	private void insProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String tid = request.getParameter("tid");
 		String productName = request.getParameter("product_name");
 		String originalPrice = request.getParameter("original_price");
@@ -272,32 +289,144 @@ public class ProductController extends HttpServlet {
 		String remark = request.getParameter("remark");
 		String status = request.getParameter("status");
 		String sort = request.getParameter("sort");
-		
-		Product data = new Product()
-		
-		
-		
-		
-		
-		
-		service.insProduct(data);
+		String json = "";
 
+		try {
+			Product data = new Product();
+			data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
+			data.setProduct_name(productName);
+			data.setOriginal_price(StrUtil.isBlank(originalPrice) ? BigDecimal.ZERO : new BigDecimal(originalPrice));
+			data.setPrice(StrUtil.isBlank(price) ? BigDecimal.ZERO : new BigDecimal(price));
+			data.setItem_no(itemNo);
+			data.setInfo(info);
+			data.setRemark(remark);
+			data.setStatus(StrUtil.isBlank(status) ? 0 : Integer.parseInt(status));
+			data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
+
+			Result<Object> insProduct = service.insProduct(data);
+			json = JSON.toJSONString(insProduct);
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品信息异常"));
+			log.error("添加产品信息异常,异常原因:【" + e.toString() + "】");
+		}
+		returnData(json, response);
 	}
 
-	private void selProduct(HttpServletRequest request, HttpServletResponse response) {
-
+	/**
+	 * 查询全部的产品信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月17日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void selProduct(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			Result<List<Product>> selProduct = service.selProduct();
+			request.setAttribute("data", selProduct);
+		} catch (Exception e) {
+			log.error("查询全部的产品信息异常,异常原因:【" + e.toString() + "】");
+		}
+		request.getRequestDispatcher("view/product/index.jsp").forward(request, response);
 	}
 
-	private void selProductById(HttpServletRequest request, HttpServletResponse response) {
-
+	/**
+	 * 查询特定的产品信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月17日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void selProductById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+		try {
+			Result<Product> selProductById = StrUtil.isBlank(id) ? new Result<Product>(Result.ERROR_4000, "参数错误")
+					: service.selProductById(id);
+			request.setAttribute("data", selProductById);
+		} catch (Exception e) {
+			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品信息异常"));
+			log.error("查询特定的产品信息异常,异常原因:【" + e.toString() + "】");
+		}
+		request.getRequestDispatcher("view/product/edit.jsp").forward(request, response);
 	}
 
-	private void uptProduct(HttpServletRequest request, HttpServletResponse response) {
+	/**
+	 * 修改产品信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月17日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	private void uptProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("id");
+		String tid = request.getParameter("tid");
+		String productName = request.getParameter("product_name");
+		String originalPrice = request.getParameter("original_price");
+		String price = request.getParameter("price");
+		String itemNo = request.getParameter("item_no");
+		String info = request.getParameter("info");
+		String remark = request.getParameter("remark");
+		String status = request.getParameter("status");
+		String sort = request.getParameter("sort");
+		String json = "";
 
+		try {
+			Product data = new Product();
+			data.setId(Integer.parseInt(id));
+			data.setTid(Integer.parseInt(tid));
+			data.setProduct_name(productName);
+			data.setOriginal_price(new BigDecimal(originalPrice));
+			data.setPrice(new BigDecimal(price));
+			data.setItem_no(itemNo);
+			data.setInfo(info);
+			data.setRemark(remark);
+			data.setStatus(Integer.parseInt(status));
+			data.setSort(Integer.parseInt(sort));
+			Result<Object> uptProduct = service.uptProduct(data);
+			json = JSON.toJSONString(uptProduct);
+		} catch (NumberFormatException e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_4000, "参数错误"));
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "修改产品信息异常"));
+			log.error("修改产品信息异常,异常信息:【" + e.toString() + "】");
+		}
+		returnData(json, response);
 	}
 
-	private void delProduct(HttpServletRequest request, HttpServletResponse response) {
-
+	/**
+	 * 删除产品信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月17日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	private void delProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("id");
+		String json = "";
+		try {
+			Result<Object> delProduct = StrUtil.isBlank(id) ? new Result<>(Result.ERROR_4000, "参数错误")
+					: service.delProduct(id);
+			json = JSON.toJSONString(delProduct);
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "删除产品信息异常"));
+			log.error("删除产品信息异常,异常原因:【" + e.toString() + "】");
+		}
+		returnData(json, response);
 	}
 
 	/**

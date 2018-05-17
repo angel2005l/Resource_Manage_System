@@ -8,7 +8,7 @@ public class Product {
 	private int id;
 	private int tid;
 	private String product_name;
-	private BigDecimal originl_price;
+	private BigDecimal original_price;
 	private BigDecimal price;
 	private String item_no;
 	private String info;
@@ -44,12 +44,12 @@ public class Product {
 		this.product_name = product_name;
 	}
 
-	public BigDecimal getOriginl_price() {
-		return originl_price;
+	public BigDecimal getOriginal_price() {
+		return original_price;
 	}
 
-	public void setOriginl_price(BigDecimal originl_price) {
-		this.originl_price = originl_price;
+	public void setOriginal_price(BigDecimal original_price) {
+		this.original_price = original_price;
 	}
 
 	public BigDecimal getPrice() {
@@ -110,8 +110,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", tid=" + tid + ", product_name=" + product_name + ", originl_price="
-				+ originl_price + ", price=" + price + ", item_no=" + item_no + ", info=" + info + ", remark=" + remark
+		return "Product [id=" + id + ", tid=" + tid + ", product_name=" + product_name + ", original_price="
+				+ original_price + ", price=" + price + ", item_no=" + item_no + ", info=" + info + ", remark=" + remark
 				+ ", add_time=" + add_time + ", status=" + status + ", sort=" + sort + "]";
 	}
 
