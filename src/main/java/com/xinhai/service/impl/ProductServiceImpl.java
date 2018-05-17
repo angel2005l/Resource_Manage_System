@@ -2,6 +2,7 @@ package com.xinhai.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.http.NameValuePair;
@@ -91,6 +92,28 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		int code = jb.getIntValue("code");
 		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("删除产品分类成功")
 				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "删除产品分类失败" : jb.getString("msg"));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Result<List<Map<String, Object>>> selProductTypeIdAndTypeName(String id) throws Exception {
+		String url = rb.getString("product_type_id_typeName");
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("id", id));
+		String resultJson = HttpClientUtil.getPostDefault(url, params);
+		JSONObject jb = JSON.parseObject(resultJson);
+		if (0 == jb.getIntValue("code")) {
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+			for (Object object : JSON.parseArray(jb.getString("data"))) {
+				Map<String, Object> ret = (Map<String, Object>) object;
+				list.add(ret);
+			}
+			return rtnSuccessResult("", list);
+		}
+		return rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
+
 	}
 
 	@Override

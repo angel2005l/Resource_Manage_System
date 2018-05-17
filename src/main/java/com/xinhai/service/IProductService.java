@@ -1,6 +1,7 @@
 package com.xinhai.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xinhai.entity.Product;
 import com.xinhai.entity.ProductImg;
@@ -19,6 +20,8 @@ public interface IProductService {
 	public Result<Object> uptProductType(ProductType data) throws Exception;
 
 	public Result<Object> delProductType(String id) throws Exception;
+
+	public Result<List<Map<String, Object>>> selProductTypeIdAndTypeName(String id) throws Exception;
 
 	// 产品管理
 
