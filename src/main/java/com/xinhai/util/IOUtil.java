@@ -26,7 +26,7 @@ public class IOUtil {
 
 	/**
 	 * 
-	 * @Title: getFormField   
+	 * @Title: getFormField
 	 * @Description: 根据二进制流提交获得普通表单控件的值
 	 * @param request
 	 * @return
@@ -36,8 +36,8 @@ public class IOUtil {
 	 * @return: Map<String,String>
 	 *
 	 */
-	public static Map<String, String> getFormField(HttpServletRequest request) throws FileUploadException,
-			UnsupportedEncodingException {
+	public static Map<String, String> getFormField(HttpServletRequest request)
+			throws FileUploadException, UnsupportedEncodingException {
 		// 实例化文件上传组件对象
 		FileItemFactory fif = new DiskFileItemFactory();
 		ServletFileUpload sfu = new ServletFileUpload(fif);
@@ -62,7 +62,7 @@ public class IOUtil {
 
 	/**
 	 * 
-	 * @Title: getFormField2Bean   
+	 * @Title: getFormField2Bean
 	 * @Description: 根据二进制流表单提交获得普通表单控件的值并转换JavaBean
 	 * @param request
 	 * @param clazz
@@ -84,7 +84,7 @@ public class IOUtil {
 
 	/**
 	 * 
-	 * @Title: getFilePaths   
+	 * @Title: getFilePaths
 	 * @Description: 根据二进制流表单提交获得文件上传控件的路径
 	 * @param request
 	 * @return
@@ -112,14 +112,14 @@ public class IOUtil {
 
 	/**
 	 * 
-	 * @Title: getFileStreams   
+	 * @Title: getFileStreams
 	 * @Description: 根据二进制流表单提交获得文件上传控件的输入流对象
 	 * @param request
 	 * @return
 	 * @throws FileUploadException
 	 * @author: MR.H
 	 * @return: List<InputStream>
-	 * @throws IOException 
+	 * @throws IOException
 	 *
 	 */
 	public static List<InputStream> getFileStreams(HttpServletRequest request) throws FileUploadException, IOException {
@@ -140,8 +140,19 @@ public class IOUtil {
 		return list;
 	}
 
-	public static Map<String, Object> getMultipartData(HttpServletRequest request) throws IOException,
-			FileUploadException {
+	/**
+	 * 获得二进制流的普通控件数据和文件流数据
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月18日
+	 * @version 1.0
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 * @throws FileUploadException
+	 */
+	public static Map<String, Object> getMultipartData(HttpServletRequest request)
+			throws IOException, FileUploadException {
 		FileItemFactory fif = new DiskFileItemFactory();
 		ServletFileUpload sfu = new ServletFileUpload(fif);
 		List<InputStream> list = new ArrayList<InputStream>();
@@ -162,6 +173,18 @@ public class IOUtil {
 		return data;
 	}
 
+	/**
+	 * 获得二进制流的普通控件数据和文件流数据并将普通控件转换为javaBean
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月18日
+	 * @version 1.0
+	 * @param request
+	 * @param clazz
+	 * @return
+	 * @throws IOException
+	 * @throws FileUploadException
+	 */
 	public static <T> Map<String, Object> getMultipartData2Bean(HttpServletRequest request, Class<T> clazz)
 			throws IOException, FileUploadException {
 		FileItemFactory fif = new DiskFileItemFactory();
@@ -180,14 +203,13 @@ public class IOUtil {
 			}
 		}
 		data.put("stream", list);
-		data.put("formField", null == map || map.isEmpty() ? null
-				: JSON.parseObject(JSON.toJSONString(map), clazz));
+		data.put("formField", null == map || map.isEmpty() ? null : JSON.parseObject(JSON.toJSONString(map), clazz));
 		return data;
 	}
 
 	/**
 	 * 
-	 * @Title: deepClone   
+	 * @Title: deepClone
 	 * @Description: 深度克隆（禁止抄袭！）
 	 * @param obj
 	 * @return

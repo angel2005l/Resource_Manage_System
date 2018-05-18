@@ -91,14 +91,18 @@ public class ProductController extends HttpServlet {
 			insProductImg(req, resp);
 			break;
 		case "product_img_sel":
+			selProductImg(req, resp);
 			break;
-		case "product_img_sel_pId":
-			break;
-		case "product_img_id":
+		// case "product_img_sel_pId":
+		// break;
+		case "product_img_sel_id":
+			selProductImgById(req, resp);
 			break;
 		case "product_img_upt":
+			uptProductImg(req, resp);
 			break;
 		case "product_img_del":
+			delProductImg(req, resp);
 			break;
 		default:
 			returnData(JSON.toJSONString(new Result<>(Result.ERROR_6100, "无此接口信息")), resp);
@@ -449,15 +453,14 @@ public class ProductController extends HttpServlet {
 	 * @param response
 	 * @author: MR.H
 	 * @return: void
-	 * @throws IOException 
+	 * @throws IOException
 	 *
 	 */
 	private void selProductIdAndProductName(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String json = "";
 		try {
-			Result<List<Map<String, Object>>> selProductIdAndProductNameNoBound = service
-					.selProductIdAndProductName();
+			Result<List<Map<String, Object>>> selProductIdAndProductNameNoBound = service.selProductIdAndProductName();
 			json = JSON.toJSONString(selProductIdAndProductNameNoBound);
 		} catch (Exception e) {
 			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "查询所有产品的键值对异常"));
@@ -468,13 +471,13 @@ public class ProductController extends HttpServlet {
 
 	/**
 	 * 
-	 * @Title: insProductImg   
+	 * @Title: insProductImg
 	 * @Description: 添加产品图片
 	 * @param request
 	 * @param response
 	 * @author: MR.H
 	 * @return: void
-	 * @throws IOException 
+	 * @throws IOException
 	 *
 	 */
 	@SuppressWarnings("unchecked")
@@ -483,13 +486,13 @@ public class ProductController extends HttpServlet {
 		String prefixProductImg = Constant.PREFIXPRODUCTIMG;
 
 		try {
-			Map<String, Object> multipartData = IOUtil.getMultipartData2Bean(request, ProductImg.class);
+			Map<String, Object> multipartData = IOUtil.getMultipartData2Bean(request, ProductImg.class);// 获得文件流和普通表单JavaBean集合
 			List<InputStream> streams = (List<InputStream>) multipartData.get("stream");
 			ProductImg data = (ProductImg) multipartData.get("formField");
 			for (InputStream inputStream : streams) {
 				DefaultPutRet uploadImg;
-				uploadImg = QniuUtil.uploadImg(inputStream, prefixProductImg + data.getPid() + "_" + DateUtil
-						.curDateYMDHMSSForService());
+				uploadImg = QniuUtil.uploadImg(inputStream,
+						prefixProductImg + data.getPid() + "_" + DateUtil.curDateYMDHMSSForService());
 				ProductImg tempData = IOUtil.deepClone(data);
 				tempData.setImg_url(uploadImg.key);
 				Result<Object> result = service.insProductImg(tempData);
@@ -500,23 +503,132 @@ public class ProductController extends HttpServlet {
 			}
 		} catch (QiniuException e) {
 			Response errorResp = e.response;
-			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
-					"添加产品图片（七牛图片上传）异常"));
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品图片（七牛图片上传）异常"));
 			log.error("添加产品图片（七牛图片上传）失败,失败原因:【" + errorResp.getInfo() + "】");
 		} catch (IOException e) {
-			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
-					"添加产品图片（文件解析）异常"));
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品图片（文件解析）异常"));
 			log.error("添加产品图片（文件解析）异常,异常原因:【" + e.toString() + "】");
 		} catch (FileUploadException e) {
-			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
-					"添加产品图片（文件上传）异常"));
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品图片（文件上传）异常"));
 			log.error("添加产品图片（文件上传）异常,异常原因:【" + e.toString() + "】");
 		} catch (Exception e) {
-			json = JSON.toJSONString(new Result<>(Result.ERROR_6000,
-					"添加产品图片异常"));
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "添加产品图片异常"));
 			log.error("添加产品图片异常,异常原因:【" + e.toString() + "】");
 		}
+		returnData(json, response);
+	}
 
+	/**
+	 * 查询全部产品图片信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月18日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 */
+	private void selProductImg(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Result<List<ProductImg>> selProductImg = service.selProductImg();
+			request.setAttribute("data", selProductImg);
+
+		} catch (Exception e) {
+			log.error("查询全部的产品图片异常,异常原因:【" + e.toString() + "】");
+		}
+		request.getRequestDispatcher("view/productImg/index.jsp");
+	}
+
+	// 废弃
+	// private void selProductImgByPid(HttpServletRequest request,
+	// HttpServletResponse response) {
+	//
+	// }
+	/**
+	 * 查询特定的产品图片
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月18日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void selProductImgById(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String id = request.getParameter("id");
+
+		try {
+			Result<ProductImg> selProductImgById = StrUtil.isBlank(id) ? new Result<>(Result.ERROR_4000, "参数错误")
+					: service.selProductImgById(id);
+			request.setAttribute("data", selProductImgById);
+		} catch (Exception e) {
+			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品图片异常"));
+			log.error("查询特定的产品图像异常,异常原因:【" + e.toString() + "】");
+		}
+		request.getRequestDispatcher("view/productImg/edit.jsp").forward(request, response);
+	}
+
+	/**
+	 * 修改产品图片信息
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月18日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	private void uptProductImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("id");
+		String pid = request.getParameter("pid");
+		String title = request.getParameter("title");
+		String isMain = request.getParameter("is_main");
+		String status = request.getParameter("status");
+		String sort = request.getParameter("sort");
+		String json = "";
+
+		try {
+			ProductImg data = new ProductImg();
+			data.setId(Integer.parseInt(id));
+			data.setPid(Integer.parseInt(pid));
+			data.setTitle(title);
+			data.setIs_main(Integer.parseInt(isMain));
+			data.setStatus(Integer.parseInt(status));
+			data.setSort(Integer.parseInt(sort));
+
+			Result<Object> uptProductImg = service.uptProductImg(data);
+			json = JSON.toJSONString(uptProductImg);
+		} catch (NumberFormatException e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_4000, "参数错误"));
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "修改产品图片信息异常"));
+			log.error("修改产品图片信息异常,异常原因:【" + e.toString() + "】");
+		}
+		returnData(json, response);
+	}
+
+	/**
+	 * 删除产品图片
+	 * 
+	 * @author 黄官易
+	 * @date 2018年5月18日
+	 * @version 1.0
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	private void delProductImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String id = request.getParameter("id");
+		String json = "";
+		try {
+			Result<Object> delProductImg = StrUtil.isBlank(id) ? new Result<>(Result.ERROR_4000, "参数错误")
+					: service.delProductImg(id);
+			json = JSON.toJSONString(delProductImg);
+		} catch (Exception e) {
+			json = JSON.toJSONString(new Result<>(Result.ERROR_6000, "删除产品图片异常"));
+			log.error("删除产品图片异常,异常原因:【" + e.toString() + "】");
+		}
 		returnData(json, response);
 	}
 

@@ -273,7 +273,7 @@ public class NewsController extends HttpServlet {
 		data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
 		data.setMain_content(mainContent);
 		data.setContent(content);
-		data.setManager_id(session.getAttribute("userId").toString());
+		data.setManager_id(session.getAttribute("user_name").toString());
 		data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
 
 		try {
