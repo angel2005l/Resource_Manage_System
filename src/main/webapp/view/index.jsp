@@ -11,7 +11,6 @@
 		<!-- libraries -->
 		<link href="<%=basePath %>css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
 
-
 		<!-- this page specific styles -->
 		<link rel="stylesheet" href="<%=basePath %>css/compiled/index.css" type="text/css" media="screen" />
 	</head>
@@ -94,10 +93,10 @@
 					</a>
 					<ul class="submenu">
 						<li>
-							<a class="func" href="xh_productType.html" target="mainFrame">产品分类</a>
+							<a class="func" href="<%=basePath %>productManage?method=product_type_sel" target="mainFrame">产品分类</a>
 						</li>
 						<li>
-							<a class="func" href="<%=basePath %>/productManage?method=product_type_sel" target="mainFrame">产品信息</a>
+							<a class="func" href="<%=basePath %>productManage?method=product_sel" target="mainFrame">产品信息</a>
 						</li>
 						<li>
 							<a class="func" href="xh_productImg.html" target="mainFrame">产品图片</a>

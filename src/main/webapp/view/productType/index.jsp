@@ -110,7 +110,7 @@
 				error:function(){
 					alert("服务未响应");
 				}
-			})
+			});
 		}
 	</script>
 
