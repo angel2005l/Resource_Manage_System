@@ -41,18 +41,18 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<Page<ProductType>> selProductType(int showCount) throws Exception {
+	public Result<Page<ProductType>> selProductType(String showCount) throws Exception {
 		String url = rb.getString("product_type_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", "selectProductType"));
 		params.add(new BasicNameValuePair("page", "1"));
-		params.add(new BasicNameValuePair("pageSize", showCount + ""));
+		params.add(new BasicNameValuePair("pageSize", showCount));
 		// params.add(new BasicNameValuePair("", ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		// data 有隔层
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), showCount,
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ProductType.class));
 	}
 
@@ -125,6 +125,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> insProduct(Product data) throws Exception {
 		String url = rb.getString("product_ins");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "insertProduct"));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
 		params.add(new BasicNameValuePair("original_price", data.getOriginal_price().toString()));
@@ -135,6 +136,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("add_time", DateUtil.curDateYMDHMS()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
@@ -143,22 +145,29 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<List<Product>> selProduct() throws Exception {
+	public Result<Page<Product>> selProduct(String showCount) throws Exception {
 		String url = rb.getString("product_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectProduct"));
+		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("pageSize", showCount));
 		// params.add(new BasicNameValuePair("", ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
-		return 0 == jb.getIntValue("code") ? rtnSuccessResult("", JSON.parseArray(jb.getString("data"), Product.class))
-				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
+
+		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), Product.class));
 	}
 
 	@Override
 	public Result<Product> selProductById(String id) throws Exception {
 		String url = rb.getString("product_sel_id");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "getProductById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
+		System.err.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		return 0 == jb.getIntValue("code") ? rtnSuccessResult("", JSON.parseObject(jb.getString("data"), Product.class))
 				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
@@ -168,6 +177,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> uptProduct(Product data) throws Exception {
 		String url = rb.getString("product_upt");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "updateProductById"));
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
@@ -190,6 +200,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> delProduct(String id) throws Exception {
 		String url = rb.getString("product_del");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "deleteProduct"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);

@@ -53,28 +53,35 @@ public class ProductController extends HttpServlet {
 		String mod = req.getParameter("method");
 		switch (mod) {
 		case "product_type_ins":
+			// 2
 			insProductType(req, resp);
 			break;
 		case "product_type_sel":
-			//1
+			// 1
 			selProductType(req, resp);
 			break;
 		case "product_type_sel_id":
+			// 2
 			selProductTypeById(req, resp);
 			break;
 		case "product_type_upt":
+			// 2
 			uptProductType(req, resp);
 			break;
 		case "product_type_del":
+			// 2
 			delProductType(req, resp);
 			break;
 		case "product_type_id_typeName":
+			// 2
 			selProductTypeIdAndTypeName(req, resp);
 			break;
 		case "product_ins":
+			//1
 			insProduct(req, resp);
 			break;
 		case "product_sel":
+			//1
 			selProduct(req, resp);
 			break;
 		case "product_sel_id":
@@ -131,7 +138,7 @@ public class ProductController extends HttpServlet {
 	private void insProductType(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String fid = request.getParameter("fid");
 		String typeName = request.getParameter("type_name");
-//		String typeIco = request.getParameter("type_ico");
+		// String typeIco = request.getParameter("type_ico");
 		String status = request.getParameter("status");
 		String sort = request.getParameter("sort");
 		String json = "";
@@ -140,7 +147,7 @@ public class ProductController extends HttpServlet {
 			ProductType data = new ProductType();
 			data.setFid(StrUtil.isBlank(fid) ? 0 : Integer.parseInt(fid));
 			data.setType_name(typeName);
-//			data.setType_ico(typeIco);
+			// data.setType_ico(typeIco);
 			data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
 			data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
 			Result<Object> insProductType = service.insProductType(data);
@@ -168,7 +175,7 @@ public class ProductController extends HttpServlet {
 	private void selProductType(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			 Result<Page<ProductType>> selProductType = service.selProductType(20);
+			Result<Page<ProductType>> selProductType = service.selProductType("20");
 			System.err.println(selProductType);
 			request.setAttribute("data", selProductType);
 		} catch (Exception e) {
@@ -196,7 +203,7 @@ public class ProductController extends HttpServlet {
 					? new Result<ProductType>(Result.ERROR_4000, "参数错误")
 					: service.selProductTypeById(id);
 			request.setAttribute("data", selProductTypeById);
-			 Result<List<Map<String, Object>>> selProductTypeIdAndTypeName = service.selProductTypeIdAndTypeName(id);
+			Result<List<Map<String, Object>>> selProductTypeIdAndTypeName = service.selProductTypeIdAndTypeName(id);
 			request.setAttribute("select", selProductTypeIdAndTypeName);
 		} catch (Exception e) {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品信息异常"));
@@ -322,7 +329,6 @@ public class ProductController extends HttpServlet {
 			data.setRemark(remark);
 			data.setStatus(StrUtil.isBlank(status) ? 0 : Integer.parseInt(status));
 			data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
-
 			Result<Object> insProduct = service.insProduct(data);
 			json = JSON.toJSONString(insProduct);
 		} catch (Exception e) {
@@ -346,7 +352,7 @@ public class ProductController extends HttpServlet {
 	private void selProduct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Result<List<Product>> selProduct = service.selProduct();
+			Result<Page<Product>> selProduct = service.selProduct("10");
 			request.setAttribute("data", selProduct);
 		} catch (Exception e) {
 			log.error("查询全部的产品信息异常,异常原因:【" + e.toString() + "】");
@@ -368,6 +374,7 @@ public class ProductController extends HttpServlet {
 	private void selProductById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
+		System.err.println(id);
 		try {
 			Result<Product> selProductById = StrUtil.isBlank(id) ? new Result<Product>(Result.ERROR_4000, "参数错误")
 					: service.selProductById(id);
@@ -376,7 +383,7 @@ public class ProductController extends HttpServlet {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品信息异常"));
 			log.error("查询特定的产品信息异常,异常原因:【" + e.toString() + "】");
 		}
-		request.getRequestDispatcher("view/product/edit.jsp").forward(request, response);
+		request.getRequestDispatcher("view/product/editLayer.jsp").forward(request, response);
 	}
 
 	/**

@@ -14,7 +14,7 @@ public interface IProductService {
 	// 产品分类管理
 	public Result<Object> insProductType(ProductType data) throws Exception;
 
-	public Result<Page<ProductType>> selProductType(int showCount) throws Exception;
+	public Result<Page<ProductType>> selProductType(String showCount) throws Exception;
 
 	public Result<ProductType> selProductTypeById(String id) throws Exception;
 
@@ -28,7 +28,7 @@ public interface IProductService {
 
 	public Result<Object> insProduct(Product data) throws Exception;
 
-	public Result<List<Product>> selProduct() throws Exception;
+	public Result<Page<Product>> selProduct(String showCount) throws Exception;
 
 	public Result<Product> selProductById(String id) throws Exception;
 
