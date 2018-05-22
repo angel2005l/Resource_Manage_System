@@ -27,6 +27,7 @@ import com.xinhai.service.IProductService;
 import com.xinhai.service.impl.ProductServiceImpl;
 import com.xinhai.util.DateUtil;
 import com.xinhai.util.IOUtil;
+import com.xinhai.util.Page;
 import com.xinhai.util.QniuUtil;
 import com.xinhai.util.Result;
 import com.xinhai.util.StrUtil;
@@ -55,6 +56,7 @@ public class ProductController extends HttpServlet {
 			insProductType(req, resp);
 			break;
 		case "product_type_sel":
+			//1
 			selProductType(req, resp);
 			break;
 		case "product_type_sel_id":
@@ -129,7 +131,7 @@ public class ProductController extends HttpServlet {
 	private void insProductType(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String fid = request.getParameter("fid");
 		String typeName = request.getParameter("type_name");
-		String typeIco = request.getParameter("type_ico");
+//		String typeIco = request.getParameter("type_ico");
 		String status = request.getParameter("status");
 		String sort = request.getParameter("sort");
 		String json = "";
@@ -138,7 +140,7 @@ public class ProductController extends HttpServlet {
 			ProductType data = new ProductType();
 			data.setFid(StrUtil.isBlank(fid) ? 0 : Integer.parseInt(fid));
 			data.setType_name(typeName);
-			data.setType_ico(typeIco);
+//			data.setType_ico(typeIco);
 			data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
 			data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
 			Result<Object> insProductType = service.insProductType(data);
@@ -166,7 +168,8 @@ public class ProductController extends HttpServlet {
 	private void selProductType(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Result<List<ProductType>> selProductType = service.selProductType();
+			 Result<Page<ProductType>> selProductType = service.selProductType(20);
+			System.err.println(selProductType);
 			request.setAttribute("data", selProductType);
 		} catch (Exception e) {
 			log.error("查询产品分类信息异常,异常原因:【" + e.toString() + "】");
@@ -193,12 +196,13 @@ public class ProductController extends HttpServlet {
 					? new Result<ProductType>(Result.ERROR_4000, "参数错误")
 					: service.selProductTypeById(id);
 			request.setAttribute("data", selProductTypeById);
-
+			 Result<List<Map<String, Object>>> selProductTypeIdAndTypeName = service.selProductTypeIdAndTypeName(id);
+			request.setAttribute("select", selProductTypeIdAndTypeName);
 		} catch (Exception e) {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品信息异常"));
 			log.error("查询特定的产品信息异常,异常原因:【" + e.toString() + "】");
 		}
-		request.getRequestDispatcher("view/productType/editLayout.jsp").forward(request, response);
+		request.getRequestDispatcher("view/productType/editLayer.jsp").forward(request, response);
 	}
 
 	/**

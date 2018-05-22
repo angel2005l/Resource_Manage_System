@@ -6,6 +6,7 @@ import java.util.Map;
 import com.xinhai.entity.Product;
 import com.xinhai.entity.ProductImg;
 import com.xinhai.entity.ProductType;
+import com.xinhai.util.Page;
 import com.xinhai.util.Result;
 
 public interface IProductService {
@@ -13,7 +14,7 @@ public interface IProductService {
 	// 产品分类管理
 	public Result<Object> insProductType(ProductType data) throws Exception;
 
-	public Result<List<ProductType>> selProductType() throws Exception;
+	public Result<Page<ProductType>> selProductType(int showCount) throws Exception;
 
 	public Result<ProductType> selProductTypeById(String id) throws Exception;
 

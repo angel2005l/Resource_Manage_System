@@ -44,6 +44,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		String url = rb.getString("news_type_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		// params.add(new BasicNameValuePair("", value));
+		params.add(new BasicNameValuePair("parameter", ""));
 
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);

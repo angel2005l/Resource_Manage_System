@@ -17,6 +17,7 @@ import com.xinhai.entity.ProductType;
 import com.xinhai.service.IProductService;
 import com.xinhai.util.DateUtil;
 import com.xinhai.util.HttpClientUtil;
+import com.xinhai.util.Page;
 import com.xinhai.util.Result;
 
 public class ProductServiceImpl extends BaseResult implements IProductService {
@@ -26,9 +27,10 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> insProductType(ProductType data) throws Exception {
 		String url = rb.getString("product_type_ins");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "insertProductType"));
 		params.add(new BasicNameValuePair("fid", data.getFid() + ""));
 		params.add(new BasicNameValuePair("type_name", data.getType_name()));
-		params.add(new BasicNameValuePair("type_ico", data.getType_ico()));
+		// params.add(new BasicNameValuePair("type_ico", data.getType_ico()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
@@ -39,35 +41,39 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<List<ProductType>> selProductType() throws Exception {
+	public Result<Page<ProductType>> selProductType(int showCount) throws Exception {
 		String url = rb.getString("product_type_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectProductType"));
+		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("pageSize", showCount + ""));
 		// params.add(new BasicNameValuePair("", ""));
-
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
-		return 0 == jb.getIntValue("code")
-				? rtnSuccessResult("", JSON.parseArray(jb.getString("data"), ProductType.class))
-				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
+		// data 有隔层
+		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), showCount,
+				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ProductType.class));
 	}
 
 	@Override
 	public Result<ProductType> selProductTypeById(String id) throws Exception {
 		String url = rb.getString("product_type_sel_id");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "getProductTypeById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		return 0 == jb.getIntValue("code")
 				? rtnSuccessResult("", JSON.parseObject(jb.getString("data"), ProductType.class))
 				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
-
 	}
 
 	@Override
 	public Result<Object> uptProductType(ProductType data) throws Exception {
 		String url = rb.getString("product_type_upt");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "updateProductTypeById"));
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
 		params.add(new BasicNameValuePair("fid", data.getFid() + ""));
 		params.add(new BasicNameValuePair("type_name", data.getType_name()));
@@ -85,6 +91,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> delProductType(String id) throws Exception {
 		String url = rb.getString("product_type_del");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "deleteProductTypeById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
@@ -99,12 +106,12 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		String url = rb.getString("product_type_id_typeName");
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "besidesProductTypeById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		if (0 == jb.getIntValue("code")) {
 			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 			for (Object object : JSON.parseArray(jb.getString("data"))) {
 				Map<String, Object> ret = (Map<String, Object>) object;
 				list.add(ret);

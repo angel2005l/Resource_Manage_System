@@ -1,5 +1,8 @@
 package com.xinhai.base;
 
+import java.util.List;
+
+import com.xinhai.util.Page;
 import com.xinhai.util.Result;
 
 /**
@@ -13,7 +16,7 @@ import com.xinhai.util.Result;
  * @version 1.0.0
  */
 public class BaseResult {
-	
+
 	/**
 	 * 返回结果集合
 	 */
@@ -164,6 +167,14 @@ public class BaseResult {
 	 */
 	public <T> Result<T> rtnDefaultMsg(int code, String msg, T data) {
 		return new Result<T>(code, msg, data);
+	}
+
+	public <T> Result<Page<T>> rtnPageWithCount(int code, String msg, int showCount, int totalResult, List<T> list) {
+		// private int showCount; // 每页显示记录数
+		// private int totalPage; // 总页数
+		// private int totalResult; // 总记录数
+		return new Result<Page<T>>(code, msg, new Page<>(showCount, totalResult, list));
+
 	}
 
 }
