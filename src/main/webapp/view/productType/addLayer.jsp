@@ -20,7 +20,6 @@ html {
 </head>
 
 <body>
-	<input type="hidden" value="<%=basePath %>">
 	<!-- main container .wide-content is used for this layout without sidebar :)  -->
 	<div class="content wide-content">
 		<div class="container-fluid">
@@ -97,5 +96,4 @@ html {
 		})
 	</script>
 </body>
-
 </html>

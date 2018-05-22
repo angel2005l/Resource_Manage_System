@@ -3,7 +3,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 <head>
 <title>产品信息弹窗</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
