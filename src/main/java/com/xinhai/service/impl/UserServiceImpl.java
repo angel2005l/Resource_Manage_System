@@ -25,11 +25,12 @@ public class UserServiceImpl extends BaseResult implements IUserService {
 	public Result<User> login(String account, String password) throws Exception {
 		String url = rb.getString("user_login");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectManagerByName"));
 		params.add(new BasicNameValuePair("user_name", account));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		if (jb.getIntValue("code") != 0) {
-			return rtnFailResult(Result.ERROR_4100, "用户不存在");
+			return rtnFailResult(Result.ERROR_4100, "用户不存在/"+jb.getString("msg"));
 		} else {
 			User userObj = JSON.parseObject(jb.getString("data"), User.class);
 			if (userObj.getPasswd().equals(getCiphertext(password))) {
@@ -44,6 +45,7 @@ public class UserServiceImpl extends BaseResult implements IUserService {
 	public Result<Object> uptPassWord(String id, String newPassword) throws Exception {
 		String url = rb.getString("user_sel_id_password");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectManagerById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
@@ -54,6 +56,9 @@ public class UserServiceImpl extends BaseResult implements IUserService {
 			User userObj = JSON.parseObject(jb.getString("data"), User.class);
 			if (userObj.getPasswd().equals(newCipherPassword)) {
 				String uptUrl = rb.getString("user_password_upt");
+				params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("parameter", "updateManagerPasswd"));
+				params.add(new BasicNameValuePair("id", id));
 				params.add(new BasicNameValuePair("passwd", newCipherPassword));
 				HttpClientUtil.getPostDefault(uptUrl, params);
 			}

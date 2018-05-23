@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.1">
 	<display-name>xh_bi_phn_rms</display-name>
 	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
+		<welcome-file>view/login.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>IndexController</servlet-name>

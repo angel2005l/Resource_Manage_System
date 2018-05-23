@@ -25,14 +25,14 @@
 			<div class="content-wrap">
 				<img class="logo" src="<%=basePath%>img/bgs/xh_behome_login.png"
 					style="margin-bottom: 20px;" /> <input class="span12" type="text"
-					placeholder="请输入账号" /> <input class="span12" type="password"
-					placeholder="请输入密码" />
+					id="userName" placeholder="请输入账号" /> <input class="span12"
+					type="password" id="password" placeholder="请输入密码" />
 				<!--<a href="#" class="forgot">Forgot password?</a>-->
 				<!--<div class="remember">
 						<input id="remember-me" type="checkbox" />
 						<label for="remember-me">Remember me</label>
 					</div>-->
-				<a class="btn-glow primary login">登录</a>
+				<a class="btn-glow primary login" onclick="login()">登录</a>
 			</div>
 		</div>
 		<!--<div class="span4 no-account">
@@ -44,8 +44,28 @@
 	<!-- pre load bg imgs -->
 	<script type="text/javascript">
 		$(function() {
-			$("html").css("background-image", "url('<%=basePath %>img/bgs/bgimage.jpg')");
+			$("html").css("background-image", "url('<%=basePath%>img/bgs/bgimage.jpg')");
 		});
+		function login() {
+		$.ajax({
+			url:'<%=basePath%>userManage?method=user_login',
+			type:'post',
+			data:{"user_name":$("#userName").val(),"passwd":$("#password").val()},
+			dataType:"json",
+			success:function(result){
+				if(result.code == 0){
+					windows.location.href("<%=basePath%>view/login.jsp");
+					} else {
+						alert(result.msg);
+						location.reload();
+					}
+				},
+				error : function() {
+					alert("服务未响应")
+				}
+
+			})
+		}
 	</script>
 </body>
 
