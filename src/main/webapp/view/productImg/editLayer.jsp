@@ -58,11 +58,13 @@ html {
 								style="width: 20%; float: left;"><input type="radio"
 								name="is_main" value="0" checked="checked" />否</label>
 						</div>
-						<div class="field-box" style="height: 37px;">
+					<div class="field-box">
 							<label>状态:</label> <label style="width: 20%;"><input
-								type="radio" name="status" value="1" checked="checked" />正常</label> <label
-								style="width: 20%; float: left;"><input type="radio"
-								name="status" value="2" />锁定</label>
+								type="radio" name="status" value="1"
+								<c:if test="${data.data.status ==1 }">checked="checked" </c:if> />正常</label>
+							<label style="width: 20%; float: left;"><input
+								type="radio" name="status" value="2"
+								<c:if test="${data.data.status ==2 }">checked="checked"</c:if> />锁定</label>
 						</div>
 						<div class="alert alert-info">
 							<i class="icon-exclamation-sign"></i>请认真填写产品图片信息
