@@ -19,9 +19,7 @@ html {
 }
 </style>
 </head>
-
 <body>
-
 	<!-- main container .wide-content is used for this layout without sidebar :)  -->
 	<div class="content wide-content">
 		<div class="container-fluid">
@@ -30,7 +28,7 @@ html {
 				<div class="span1 avatar-box"></div>
 				<!-- edit form column -->
 				<div class="span7 personal-info">
-					<form>
+					<form id="tableForm">
 						<div class="field-box">
 							<label>新闻标题:</label> <input class="span5 inline-input"
 								type="text" name="title" placeholder="请输入新闻标题..." />
@@ -65,7 +63,7 @@ html {
 							<i class="icon-exclamation-sign"></i>请认真填写新闻信息
 						</div>
 						<div class="field-box actions">
-							<input type="button" class="btn-flat primary" value="保存" /> <input
+							<input id="sumbit_form" type="button" class="btn-flat primary" value="保存" /> <input
 								id="close_win" type="button" class="btn-flat danger" value="取消" />
 						</div>
 					</form>
@@ -79,7 +77,7 @@ html {
 	<script type="text/javascript" src="<%=basePath%>js/jquery.form.js"></script>
 	<script>
 		$(function(){
-			var selectObj =$("#fid");
+			var selectObj =$("#tid");
 			$.ajax({
 				url:'<%=basePath%>newsManage?method=news_type_id_typeName',
 				type:'post',

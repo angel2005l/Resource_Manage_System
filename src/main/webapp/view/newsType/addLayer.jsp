@@ -3,13 +3,11 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<title>新闻分类弹窗</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- this page specific styles -->
 		<link rel="stylesheet" href="<%=basePath %>css/compiled/personal-info.css" type="text/css" media="screen" />
-
 		<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -72,7 +70,7 @@
 		$(function(){
 			var selectObj =$("#fid");
 			$.ajax({
-				url:'<%=basePath%>newsManage?method=news_type_id_typeName',
+				url:'<%=basePath%>newsManage?method=news_type_id_typeName&id=',
 				type:'post',
 				dataType:'json',
 				async:false,
@@ -102,7 +100,7 @@
 				success:function(result){
 					alert(result.msg);
 					if(result.code == 0){
-						parent.location.href='<%=basePath%>newsManage?method=news_type_sel?id=';
+						parent.location.href='<%=basePath%>newsManage?method=news_type_sel';
 						parent.layer.close(index);
 						} else {
 							return;

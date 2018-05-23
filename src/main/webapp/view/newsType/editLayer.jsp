@@ -3,7 +3,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<title>新闻分类弹窗</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +19,6 @@
 			}
 		</style>
 	</head>
-
 	<body>
 		<input type="hidden" id="fidCode" value="${data.data.fid }">
 		<!-- main container .wide-content is used for this layout without sidebar :)  -->
@@ -77,7 +75,7 @@
 	$(function(){
 		var selectObj =$("#fid");
 		$.ajax({
-			url:'<%=basePath%>newsManage?method=news_type_id_typeName',
+			url:'<%=basePath%>newsManage?method=news_type_id_typeName&id=',
 			type:'post',
 			dataType:'json',
 			async:false,
@@ -114,7 +112,7 @@
 				success:function(result){
 					alert(result.msg);
 					if(result.code == 0){
-						parent.location.href='<%=basePath%>newsManage?method=news_type_sel?id=';
+						parent.location.href='<%=basePath%>newsManage?method=news_type_sel';
 						parent.layer.close(index);
 						} else {
 							return;
