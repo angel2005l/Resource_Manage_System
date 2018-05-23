@@ -41,7 +41,7 @@ public interface IProductService {
 	// 产品图片管理
 	public Result<Object> insProductImg(ProductImg data) throws Exception;
 
-	public Result<List<ProductImg>> selProductImg() throws Exception;
+	public  Result<Page<ProductImg>> selProductImg(String showCount) throws Exception;
 
 	public Result<List<ProductImg>> selProductionImgByProId(String proId) throws Exception;
 

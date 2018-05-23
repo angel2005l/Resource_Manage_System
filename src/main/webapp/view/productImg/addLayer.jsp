@@ -32,11 +32,11 @@ html {
 				<div class="span7 personal-info">
 					<form id="tableForm" enctype="multipart/form-data">
 						<div class="field-box">
-							<label>图片标题:</label> <input class="span5 inline-input"
+							<label>图片标题:</label> <input class="span5 inline-input" name="title"
 								type="text" placeholder="请输入图片标题..." />
 						</div>
 						<div class="field-box">
-							<label>序号:</label> <input class="span5 inline-input" type="text"
+							<label>序号:</label> <input class="span5 inline-input" type="text" name="sort"
 								placeholder="请输入序号..." />
 						</div>
 						<div class="field-box">
@@ -45,10 +45,8 @@ html {
 						<div class="field-box">
 							<label>所属产品</label>
 							<div class="ui-select">
-								<select id="fid" name="fid">
+								<select id="pid" name="pid">
 									<option value="" selected="selected">未绑定</option>
-									<option value="CGYL-001">常规医疗用品</option>
-									<option value="ZNYL-001">智能化医疗用品</option>
 								</select>
 							</div>
 						</div>
@@ -60,9 +58,9 @@ html {
 						</div>
 						<div class="field-box" style="height: 37px;">
 							<label>状态:</label> <label style="width: 20%;"><input
-								type="radio" name="newsTypeStatus" value="1" checked="checked" />正常</label> <label
+								type="radio" name="status" value="1" checked="checked" />正常</label> <label
 								style="width: 20%; float: left;"><input type="radio"
-								name="newsTypeStatus" value="2" />锁定</label>
+								name="status" value="2" />锁定</label>
 						</div>
 						<div class="alert alert-info">
 							<i class="icon-exclamation-sign"></i>请认真填写产品图片信息
@@ -81,6 +79,31 @@ html {
 	<!-- scripts -->
 	<script src="<%=basePath%>js/jquery.form.js"></script>
 	<script>
+	$(function(){
+		var selectObj =$("#pid");
+		$.ajax({
+			url:'<%=basePath %>productManage?method=product_id_productName',
+			type:'post',
+			dataType:'json',
+			async:false,
+			success:function(result){
+					selectObj.empty();
+					selectObj.append($("<option />").text("未绑定").attr("value","").attr("selected","selected"));
+				if(result.code ==0){
+					$(result.data).each(function(){
+						selectObj.append($("<option />").text(this.value).attr("value",this.code));
+					})
+				}else{
+					alert(result.msg);
+				}
+			},
+			error:function(){
+				alert("服务未响应")
+			}
+		})
+	});
+	
+	
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 			$("#tableForm").ajaxSubmit({

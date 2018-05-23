@@ -3,14 +3,25 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-	<display-name></display-name>
+	<display-name>xh_bi_phn_rms</display-name>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
 	<servlet>
 		<servlet-name>IndexController</servlet-name>
 		<servlet-class>com.xinhai.controller.IndexController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>IndexController</servlet-name>
-		<url-pattern>/test</url-pattern>
+		<url-pattern>/userManage</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>NewsController</servlet-name>
+		<servlet-class>com.xinhai.controller.NewsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NewsController</servlet-name>
+		<url-pattern>/newsManage</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ProductController</servlet-name>
@@ -20,4 +31,16 @@
 		<servlet-name>ProductController</servlet-name>
 		<url-pattern>/productManage</url-pattern>
 	</servlet-mapping>
+	<filter>
+		<filter-name>ChacterEncoding</filter-name>
+		<filter-class>com.xinhai.filter.ChacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ChacterEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>

@@ -46,65 +46,28 @@
 						</thead>
 						<tbody>
 							<!-- row -->
-							<c:forEach items="" var="" varStatus="">
+							<c:forEach items="${data.data.list }" var="b" varStatus="s">
 								<tr>
 									<td>${s.count }</td>
-									<td><span
-										<c:choose>
-										<c:when test="${b.status==0 }">class="label label-important" </c:when>
+									<td>${b.title }</td>
+									<td>${b.img_url }</td>
+									<td>${b.pid }</td>
+									<td>${b.sort }</td>
+									<td><span<c:choose>
+									<c:when test="${b.status==0 }">class="label label-important"</c:when>
 										<c:when test="${b.status==2 }">class="label label-warning"</c:when>
 										<c:otherwise>class="label label-success"</c:otherwise>
-									</c:choose>>
-											<tag:enum className="CommonEnum">${b.status }</tag:enum>
-									</span></td>
+										</c:choose>><tag:enum
+												className="CommonEnum">${b.status }</tag:enum></span></td>
 									<td><c:if test="${b.status!=0 }">
-											<ul class="actions">
-												<li><a onclick="edit(${b.id })">编辑</a></li>
-												<li class="last"><a onclick="del(${b.id })">删除</a></li>
-											</ul>
+									<ul class="actions">
+										<li><a onclick="edit(${b.id })" >编辑</a></li>
+										<li class="last"><a onclick="del(${b.id })" >删除</a></li>
+									</ul>
 										</c:if></td>
-								</tr>
+									</tr>
 							</c:forEach>
-
-							<tr>
-								<td>1</td>
-								<td>常规医疗用品</td>
-								<td>phn_product_20180520223923023</td>
-								<td>1</td>
-								<td>1</td>
-								<td><span class="label label-success">正常</span></td>
-								<td>
-									<ul class="actions">
-										<li><a href="#">编辑</a></li>
-										<li class="last"><a href="#">删除</a></li>
-									</ul>
-								</td>
-							</tr>
 							<!-- row -->
-							<tr>
-								<td>2</td>
-								<td>智能化医疗用品</td>
-								<td>phn_product_20180520223923025</td>
-								<td>1</td>
-								<td>2</td>
-								<td><span class="label label-warning">锁定</span></td>
-								<td>
-									<ul class="actions">
-										<li><a href="#">编辑</a></li>
-										<li class="last"><a href="#">删除</a></li>
-									</ul>
-								</td>
-							</tr>
-							<!-- row -->
-							<tr>
-								<td>3</td>
-								<td>常规医疗用品</td>
-								<td>phn_product_20180520223923026</td>
-								<td>1</td>
-								<td>3</td>
-								<td><span class="label label-important">删除</span></td>
-								<td></td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -148,7 +111,5 @@
 				});
 			}
 		</script>
-
 </body>
-
 </html>

@@ -209,28 +209,12 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "删除产品信息失败" : jb.getString("msg"));
 	}
 
-	@Override
-	public Result<Object> insProductImg(ProductImg data) throws Exception {
-		String url = rb.getString("product_img_ins");
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("pid", data.getPid() + ""));
-		params.add(new BasicNameValuePair("img_url", data.getImg_url()));
-		params.add(new BasicNameValuePair("title", data.getTitle()));
-		params.add(new BasicNameValuePair("is_main", data.getIs_main() + ""));
-		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
-		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
-		String resultJson = HttpClientUtil.getPostDefault(url, params);
-		JSONObject jb = JSON.parseObject(resultJson);
-		int code = jb.getIntValue("code");
-		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("添加产品图片成功")
-				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "添加产品图片失败" : jb.getString("msg"));
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public Result<List<Map<String, Object>>> selProductIdAndProductName() throws Exception {
 		String url = rb.getString("product_id_productName");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectProductCodeValue"));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		if (0 == jb.getIntValue("code")) {
@@ -245,21 +229,44 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<List<ProductImg>> selProductImg() throws Exception {
+	public Result<Object> insProductImg(ProductImg data) throws Exception {
+		String url = rb.getString("product_img_ins");
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "insertProductImg"));
+		params.add(new BasicNameValuePair("pid", data.getPid() + ""));
+		params.add(new BasicNameValuePair("img_url", data.getImg_url()));
+		params.add(new BasicNameValuePair("title", data.getTitle()));
+		params.add(new BasicNameValuePair("is_main", data.getIs_main() + ""));
+		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
+		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
+		System.err.println(params);
+		String resultJson = HttpClientUtil.getPostDefault(url, params);
+		JSONObject jb = JSON.parseObject(resultJson);
+		int code = jb.getIntValue("code");
+		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("添加产品图片成功")
+				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "添加产品图片失败" : jb.getString("msg"));
+	}
+
+	@Override
+	public Result<Page<ProductImg>> selProductImg(String showCount) throws Exception {
 		String url = rb.getString("product_img_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectProductImg"));
+		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("pageSize", showCount));
 		// params.add(new BasicNameValuePair("", ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
-		return 0 == jb.getIntValue("code")
-				? rtnSuccessResult("", JSON.parseArray(jb.getString("data"), ProductImg.class))
-				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
+		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ProductImg.class));
 	}
 
 	@Override
 	public Result<List<ProductImg>> selProductionImgByProId(String proId) throws Exception {
 		String url = rb.getString("product_img_sel_pId");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "selectProductImgByPid"));
 		params.add(new BasicNameValuePair("pid", proId));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
@@ -270,11 +277,13 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 
 	@Override
 	public Result<ProductImg> selProductImgById(String id) throws Exception {
-		String url = rb.getString("product_img_id");
+		String url = rb.getString("product_img_sel_id");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "getProductImgById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
+		System.err.println(resultJson);
 		return 0 == jb.getIntValue("code")
 				? rtnSuccessResult("", JSON.parseObject(jb.getString("data"), ProductImg.class))
 				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
@@ -284,6 +293,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> uptProductImg(ProductImg data) throws Exception {
 		String url = rb.getString("product_img_upt");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("parameter", "updateProductImg"));
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
 		params.add(new BasicNameValuePair("pid", data.getPid() + ""));
 		params.add(new BasicNameValuePair("img_url", data.getImg_url()));
@@ -302,7 +312,8 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	public Result<Object> delProductImg(String id) throws Exception {
 		String url = rb.getString("product_img_del");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-
+		params.add(new BasicNameValuePair("parameter", "deleteProductImgById"));
+		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");

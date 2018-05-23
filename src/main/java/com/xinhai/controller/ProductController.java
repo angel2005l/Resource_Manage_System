@@ -77,29 +77,35 @@ public class ProductController extends HttpServlet {
 			selProductTypeIdAndTypeName(req, resp);
 			break;
 		case "product_ins":
-			//1
+			// 2
 			insProduct(req, resp);
 			break;
 		case "product_sel":
-			//1
+			// 1
 			selProduct(req, resp);
 			break;
 		case "product_sel_id":
+			// 2
 			selProductById(req, resp);
 			break;
 		case "product_upt":
+			// 2
 			uptProduct(req, resp);
 			break;
 		case "product_del":
+			// 2
 			delProduct(req, resp);
 			break;
 		case "product_id_productName":
+			// 2
 			selProductIdAndProductName(req, resp);
 			break;
 		case "product_img_ins":
+			//2
 			insProductImg(req, resp);
 			break;
 		case "product_img_sel":
+			//1
 			selProductImg(req, resp);
 			break;
 		// case "product_img_sel_pId":
@@ -111,6 +117,7 @@ public class ProductController extends HttpServlet {
 			uptProductImg(req, resp);
 			break;
 		case "product_img_del":
+			//2
 			delProductImg(req, resp);
 			break;
 		default:
@@ -378,6 +385,8 @@ public class ProductController extends HttpServlet {
 		try {
 			Result<Product> selProductById = StrUtil.isBlank(id) ? new Result<Product>(Result.ERROR_4000, "参数错误")
 					: service.selProductById(id);
+			Result<List<Map<String, Object>>> selProductIdAndProductName = service.selProductIdAndProductName();
+			request.setAttribute("select", selProductIdAndProductName);
 			request.setAttribute("data", selProductById);
 		} catch (Exception e) {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品信息异常"));
@@ -503,9 +512,10 @@ public class ProductController extends HttpServlet {
 			for (InputStream inputStream : streams) {
 				DefaultPutRet uploadImg;
 				uploadImg = QniuUtil.uploadImg(inputStream,
-						prefixProductImg + data.getPid() + "_" + DateUtil.curDateYMDHMSSForService());
+						prefixProductImg + DateUtil.curDateYMDHMSSForService());
 				ProductImg tempData = IOUtil.deepClone(data);
 				tempData.setImg_url(uploadImg.key);
+				System.err.println(tempData);
 				Result<Object> result = service.insProductImg(tempData);
 				json = JSON.toJSONString(result);
 				if (result.getCode() != 0) {
@@ -537,16 +547,18 @@ public class ProductController extends HttpServlet {
 	 * @version 1.0
 	 * @param request
 	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
-	private void selProductImg(HttpServletRequest request, HttpServletResponse response) {
+	private void selProductImg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Result<List<ProductImg>> selProductImg = service.selProductImg();
+			Result<Page<ProductImg>> selProductImg = service.selProductImg("10");
 			request.setAttribute("data", selProductImg);
-
 		} catch (Exception e) {
 			log.error("查询全部的产品图片异常,异常原因:【" + e.toString() + "】");
 		}
-		request.getRequestDispatcher("view/productImg/index.jsp");
+		System.err.println("dasd");
+		request.getRequestDispatcher("view/productImg/index.jsp").forward(request, response);
 	}
 
 	// 废弃
@@ -568,7 +580,6 @@ public class ProductController extends HttpServlet {
 	private void selProductImgById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
-
 		try {
 			Result<ProductImg> selProductImgById = StrUtil.isBlank(id) ? new Result<>(Result.ERROR_4000, "参数错误")
 					: service.selProductImgById(id);
@@ -577,7 +588,7 @@ public class ProductController extends HttpServlet {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的产品图片异常"));
 			log.error("查询特定的产品图像异常,异常原因:【" + e.toString() + "】");
 		}
-		request.getRequestDispatcher("view/productImg/edit.jsp").forward(request, response);
+		request.getRequestDispatcher("view/productImg/editLayer.jsp").forward(request, response);
 	}
 
 	/**
