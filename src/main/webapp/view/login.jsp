@@ -54,7 +54,7 @@
 			dataType:"json",
 			success:function(result){
 				if(result.code == 0){
-					windows.location.href("<%=basePath%>view/login.jsp");
+					window.location.href="<%=basePath%>view/index.jsp";
 					} else {
 						alert(result.msg);
 						location.reload();

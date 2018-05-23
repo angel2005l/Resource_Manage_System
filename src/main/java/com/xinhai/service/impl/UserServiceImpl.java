@@ -49,18 +49,20 @@ public class UserServiceImpl extends BaseResult implements IUserService {
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
+		System.err.println(resultJson);
 		if (jb.getIntValue("code") != 0) {
 			return rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
 		} else {
 			String newCipherPassword = getCiphertext(newPassword);
 			User userObj = JSON.parseObject(jb.getString("data"), User.class);
-			if (userObj.getPasswd().equals(newCipherPassword)) {
+			if (!userObj.getPasswd().equals(newCipherPassword)) {
 				String uptUrl = rb.getString("user_password_upt");
 				params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair("parameter", "updateManagerPasswd"));
 				params.add(new BasicNameValuePair("id", id));
 				params.add(new BasicNameValuePair("passwd", newCipherPassword));
-				HttpClientUtil.getPostDefault(uptUrl, params);
+				resultJson = HttpClientUtil.getPostDefault(uptUrl, params);
+				return rtnSuccessResult("密码修改成功");
 			}
 			return rtnFailResult(Result.ERROR_4100, "新密码与旧密码相同,修改密码失败");
 		}
