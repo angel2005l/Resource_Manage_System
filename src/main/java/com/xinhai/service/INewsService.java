@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.xinhai.entity.Article;
+import com.xinhai.entity.ArticleImg;
 import com.xinhai.entity.ArticleType;
+import com.xinhai.util.Page;
 import com.xinhai.util.Result;
 
 public interface INewsService {
@@ -17,7 +19,7 @@ public interface INewsService {
 	public Result<Object> insNewsType(ArticleType data) throws Exception;
 
 	// 查询新闻类型信息
-	public Result<List<ArticleType>> selNewsTypes() throws Exception;
+	public Result<Page<ArticleType>> selNewsTypes(String showCount) throws Exception;
 
 	// 查询除了特定id以外的所有的 分类名和id
 	public Result<List<Map<String, Object>>> selNewsTypeIdAndTypeName(String id) throws Exception;
@@ -39,7 +41,7 @@ public interface INewsService {
 	public Result<Object> insNews(Article data) throws Exception;
 
 	// 查询信息
-	public Result<List<Article>> selNews() throws Exception;
+	public Result<Page<Article>> selNews(String showCount) throws Exception;
 
 	// 查询特定新闻
 	public Result<Article> selNewsById(String id) throws Exception;
@@ -50,4 +52,15 @@ public interface INewsService {
 	// 删除新闻
 	public Result<Object> delNews(String id) throws Exception;
 
+	public Result<List<Map<String, Object>>> selNewsIdAndName() throws Exception;
+
+	public Result<Object> insNewsImg(ArticleImg data) throws Exception;
+
+	public Result<Page<ArticleImg>> selNewsImg(String showCount) throws Exception;
+
+	public Result<ArticleImg> selNewsImgById(String id) throws Exception;
+
+	public Result<Object> uptNewsImg(ArticleImg data) throws Exception;
+
+	public Result<Object> delNewsImg(String id) throws Exception;
 }
