@@ -77,8 +77,6 @@ html {
 										<option value="${b.code }"
 											<c:if test="${b.code==data.data.id }">selected="selected"</c:if>>${b.value }</option>
 									</c:forEach>
-									<option value="1">常规医疗用品</option>
-									<option value="2">智能化医疗用品</option>
 								</select>
 							</div>
 						</div>
@@ -94,8 +92,9 @@ html {
 							<i class="icon-exclamation-sign"></i>请认真填写产品信息
 						</div>
 						<div class="field-box actions">
-							<input type="button" class="btn-flat primary" value="保存" /> <input
-								id="close_win" type="button" class="btn-flat danger" value="取消" />
+							<input id="sumbit_form" type="button" class="btn-flat primary"
+								value="保存" /> <input id="close_win" type="button"
+								class="btn-flat danger" value="取消" />
 						</div>
 					</form>
 				</div>
@@ -126,7 +125,7 @@ html {
 					alert("服务未响应");
 				}
 			});
-		
+		});
 		$("#close_win").on("click", function() {
 			parent.layer.close(index);
 		})

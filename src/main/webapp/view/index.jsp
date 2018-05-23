@@ -5,7 +5,7 @@
 <html>
 
 	<head>
-		<title>新海集团_陪护宁信息管理后台</title>
+		<title>新海集团_陪护宁数据管理系统</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- libraries -->
@@ -20,7 +20,7 @@
 		<!-- navbar -->
 		<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
-				<a class="brand" href="index.html"><i class="icon-fire"></i>&nbsp;&nbsp;&nbsp;<img src="<%=basePath %>img/logo_simple.png" /></a>
+				<a class="brand" href="javascript:void(0)" ><i class="icon-fire"></i>&nbsp;&nbsp;&nbsp;<img src="<%=basePath %>img/logo_simple.png" /></a>
 				<ul class="nav pull-right">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle hidden-phone" data-toggle="dropdown">
@@ -64,7 +64,7 @@
 						<div class="arrow"></div>
 						<div class="arrow_border"></div>
 					</div>
-					<a href="index.html">
+					<a href="index.jsp">
 						<i class="icon-fire"></i>
 						<span>主页</span>
 					</a>
@@ -99,7 +99,7 @@
 							<a class="func" href="<%=basePath %>productManage?method=product_sel" target="mainFrame">产品信息</a>
 						</li>
 						<li>
-							<a class="func" href="xh_productImg.html" target="mainFrame">产品图片</a>
+							<a class="func" href="<%=basePath %>productManage?method=product_img_sel" target="mainFrame">产品图片</a>
 						</li>
 					</ul>
 				</li>
@@ -110,7 +110,7 @@
 		<!-- main container -->
 		<div class="content">
 			<div class="frame-div">
-				<iframe class="frame" id="mainFrame" name="mainFrame" src="indexa.html"></iframe>
+				<iframe class="frame" id="mainFrame" name="mainFrame" src="index.jsp"></iframe>
 			</div>
 		</div>
 
