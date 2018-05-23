@@ -70,19 +70,19 @@
 					</a>
 				</li>
 				<li class="left-nav-li">
-					<a class="dropdown-toggle" href="#">
+					<a class="dropdown-toggle">
 						<i class="icon-comment"></i>
 						<span>新闻管理</span>
 					</a>
 					<ul class="submenu">
 						<li>
-							<a class="func" href="xh_newsType.html" target="mainFrame">新闻分类</a>
+							<a class="func" href="<%=basePath %>newsManage?method=news_type_sel" target="mainFrame">新闻分类</a>
 						</li>
 						<li>
-							<a class="func" href="xh_news.html" target="mainFrame">新闻信息</a>
+							<a class="func" href="<%=basePath %>newsManage?method=news_sel" target="mainFrame">新闻信息</a>
 						</li>
 						<li>
-							<a class="func" href="javascript:void(0)" target="mainFrame">新闻图片</a>
+							<a class="func" href="<%=basePath %>newsManage?method=news_img_sel" target="mainFrame">新闻图片</a>
 						</li>
 					</ul>
 				</li>
