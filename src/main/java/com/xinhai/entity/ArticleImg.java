@@ -1,8 +1,13 @@
 package com.xinhai.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class ArticleImg {
+public class ArticleImg implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private int aid;
 	private String title;

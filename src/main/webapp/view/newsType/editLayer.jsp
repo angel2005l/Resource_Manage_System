@@ -31,6 +31,7 @@
 					<!-- edit form column -->
 					<div class="span7 personal-info">
 						<form id="tableForm">
+							<input type="hidden" id="id" name="id" value="${data.data.id }">
 							<div class="field-box">
 								<label>分类名称:</label>
 								<input class="span5 inline-input" name="type_name" type="text" placeholder="请输入分类名称..." value="${data.data.type_name }" />
@@ -75,7 +76,7 @@
 	$(function(){
 		var selectObj =$("#fid");
 		$.ajax({
-			url:'<%=basePath%>newsManage?method=news_type_id_typeName&id=',
+			url:'<%=basePath%>newsManage?method=news_type_sel_id_typeName&id=$("#id").val()',
 			type:'post',
 			dataType:'json',
 			async:false,
@@ -96,9 +97,9 @@
 		});
 		
 		$("#fid option").each(function(){
-			if(this.value == $("#fidCode").val()){
-				this.attr("selected","selected");
-					break;
+			if(this.value == $("#tidCode").val()){
+				 $(this).attr("selected","selected");
+				return;
 			}
 		})
 	});
@@ -106,7 +107,7 @@
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 			$("#tableForm").ajaxSubmit({
-				url:'<%=basePath%>newsManage?method=news_type_ins',
+				url:'<%=basePath%>newsManage?method=news_type_upt',
 				type:'post',
 				dataType:'json',
 				success:function(result){

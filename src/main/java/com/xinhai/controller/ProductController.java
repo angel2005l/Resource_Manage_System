@@ -504,7 +504,6 @@ public class ProductController extends HttpServlet {
 	private void insProductImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String json = "";
 		String prefixProductImg = Constant.PREFIXPRODUCTIMG;
-
 		try {
 			Map<String, Object> multipartData = IOUtil.getMultipartData2Bean(request, ProductImg.class);// 获得文件流和普通表单JavaBean集合
 			List<InputStream> streams = (List<InputStream>) multipartData.get("stream");

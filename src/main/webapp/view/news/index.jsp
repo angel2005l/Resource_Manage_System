@@ -50,7 +50,7 @@
 							</thead>
 							<tbody>
 								<!-- row -->
-								<c:forEach items="${data.data }" var="b" varStatus="s">
+								<c:forEach items="${data.data.list }" var="b" varStatus="s">
 									<tr>
 										<td>${s.count }</td>
 										<td>${b.title }</td>
@@ -72,7 +72,7 @@
 										</c:if></td>
 									</tr>
 								</c:forEach>
-								<tr>
+								<!-- <tr>
 									<td>1</td>
 									<td>培护宁智能集尿器荣获2017中国设计红星奖</td>
 									<td>被誉为工业设计界“奥斯卡”的中国设计红星奖颁奖典礼在北京举行，新海科技集团有限公司旗下品牌培护宁产品PHN-B100智能集尿</td>
@@ -89,7 +89,7 @@
 										</ul>
 									</td>
 								</tr>
-								<!-- row -->
+								row
 								<tr>
 									<td>2</td>
 									<td>培护宁智能集尿器荣获2017中国设计红星奖</td>
@@ -97,14 +97,14 @@
 									<td><span class="label label-important">删除</span></td>
 									<td>2017-12-25</td>
 									<td>
-										<!--<ul class="actions">
+										<ul class="actions">
 											<li>
 												<a href="javascript:void(0);" >编辑</a>
 											</li>
 											<li class="last">
 												<a href="#">删除</a>
 											</li>
-										</ul>-->
+										</ul>
 									</td>
 								</tr>
 								<tr>
@@ -123,7 +123,7 @@
 											</li>
 										</ul>
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -146,7 +146,7 @@
 			function edit(id){
 				layer.open({
 					type:2,
-					title:'新闻信息修改',
+					title:'修改新闻信息',
 					area : [ '400px', '500px' ],
 					shadeClose : false, //点击遮罩关闭
 					content: '<%=basePath %>newsManage?method=news_sel_id&id='+id
@@ -167,20 +167,6 @@
 					}
 				});
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		</script>
-
 	</body>
-
 </html>

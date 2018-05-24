@@ -32,18 +32,16 @@ html {
 				<!-- edit form column -->
 				<div class="span7 personal-info">
 					<form id="tableForm" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="${data.data.id }">
 						<div class="field-box">
 							<label>图片标题:</label> <input class="span5 inline-input"
 								name="title" type="text" placeholder="请输入图片标题..."
 								value="${data.data.title }" />
 						</div>
-						<div class="field-box">
-							<label>序号:</label> <input class="span5 inline-input" type="text"
-								name="sort" placeholder="请输入序号..." value="${data.data.sort }" />
-						</div>
-						<div class="field-box">
-							<label>图片文件:</label> <input type="file" name="img" />
-						</div>
+						<div class="field-box" style="max-width:600px;max-height:300px;">
+								<label>图片详情</label>
+                                <img src="<%=imgRootUrl %>${data.data.url }" />
+                            </div>
 						<div class="field-box">
 							<label>所属文章</label>
 							<div class="ui-select">
@@ -81,7 +79,7 @@ html {
 	$(function(){
 		var selectObj =$("#aid");
 		$.ajax({
-			url:'<%=basePath%>newsManage?method=news_id_name',
+			url:'<%=basePath%>newsManage?method=news_sel_id_name',
 			type:'post',
 			dataType:'json',
 			async:false,
@@ -103,8 +101,8 @@ html {
 		
 		$("#aid option").each(function(){
 			if(this.value == $("#aidCode").val()){
-				this.attr("selected","selected");
-					break;
+				 $(this).attr("selected","selected");
+				return;
 			}
 		})
 	});
@@ -113,7 +111,7 @@ html {
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 			$("#tableForm").ajaxSubmit({
-				url:'<%=basePath%>productManage?method=product_img_upt',
+				url:'<%=basePath%>newsManage?method=news_img_upt',
 				type:'post',
 				dataType : "json",
 				success:function(result){

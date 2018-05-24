@@ -41,6 +41,7 @@
 								<tr>
 									<th class="span1">序号</th>
 									<th class="span2"><span class="line"></span>分类名称</th>
+									<th class="span2"><span class="line"></span>所属分类</th>
 									<th class="span2"><span class="line"></span>排序</th>
 									<th class="span1"><span class="line"></span>状态</th>
 									<th class="span2"><span class="line"></span>操作</th>
@@ -48,10 +49,11 @@
 							</thead>
 							<tbody>
 								<!-- row -->
-								<c:forEach items="${data.data }" var="b" varStatus="s">
+								<c:forEach items="${data.data.list }" var="b" varStatus="s">
 									<tr>
 										<td>${s.count }</td>
 										<td>${b.type_name }</td>
+										<td>${b.fid }</td>
 										<td>${b.sort }</td>
 										<td><span
 											<c:choose>
@@ -90,15 +92,15 @@
 			function edit(id){
 				layer.open({
 					type:2,
-					title:'新闻分类修改',
+					title:'修改新闻分类',
 					area : [ '400px', '500px' ],
 					shadeClose : false, //点击遮罩关闭
-					content: '<%=basePath %>newsManage?method=news_sel_id&id='+id
+					content: '<%=basePath %>newsManage?method=news_type_sel_id&id='+id
 				})			
 			}
 			function del(id){
 				$.ajax({
-					url:'<%=basePath%>newsManage?method=news_del',
+					url:'<%=basePath%>newsManage?method=news_type_del',
 					type:'post',
 					dataType:'json',
 					data:{"id":id},

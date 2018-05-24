@@ -39,10 +39,6 @@ html {
 								value="${data.data.title }" />
 						</div>
 						<div class="field-box">
-							<label>序号:</label> <input class="span5 inline-input" type="text"
-								name="sort" placeholder="请输入序号..." value="${data.data.sort }" />
-						</div>
-						<div class="field-box">
 							<label>主要内容（摘要）</label>
 							<textarea class="span5" name="main_content" rows="2">${data.data.main_content }</textarea>
 						</div>
@@ -54,7 +50,7 @@ html {
 							<label>所属分类</label>
 							<div class="ui-select">
 								<select id="tid" name="tid">
-									<option value="0" selected="selected">主级新闻分类</option>
+									<option value="" selected="selected">请选择新闻分类</option>
 								</select>
 							</div>
 						</div>
@@ -86,13 +82,13 @@ html {
 		$(function(){
 			var selectObj =$("#tid");
 			$.ajax({
-				url:'<%=basePath%>newsManage?method=news_type_id_typeName',
+				url:'<%=basePath%>newsManage?method=news_type_sel_id_typeName&id',
 				type:'post',
 				dataType:'json',
 				async:false,
 				success:function(result){
 						selectObj.empty();
-						selectObj.append($("<option />").text("主级新闻分类").attr("value","").attr("selected","selected"));
+						selectObj.append($("<option />").text("请选择新闻分类").attr("value","").attr("selected","selected"));
 					if(result.code ==0){
 						$(result.data).each(function(){
 							selectObj.append($("<option />").text(this.value).attr("value",this.code));
@@ -108,8 +104,8 @@ html {
 			
 			$("#tid option").each(function(){
 				if(this.value == $("#tidCode").val()){
-					this.attr("selected","selected");
-						break;
+					 $(this).attr("selected","selected");
+					return;
 				}
 			})
 		});
@@ -117,7 +113,7 @@ html {
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 			$("#tableForm").ajaxSubmit({
-				url:'<%=basePath%>newsManage?method=news_ins',
+				url:'<%=basePath%>newsManage?method=news_upt',
 				type:'post',
 				dataType:'json',
 				success:function(result){

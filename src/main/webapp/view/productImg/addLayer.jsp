@@ -40,7 +40,7 @@ html {
 								placeholder="请输入序号..." />
 						</div>
 						<div class="field-box">
-							<label>图片文件:</label> <input type="file" name="img" />
+							<label>图片文件:</label> <input type="file" id="upLoad" name="img" />
 						</div>
 						<div class="field-box">
 							<label>所属产品</label>
@@ -103,10 +103,11 @@ html {
 		})
 	});
 	
-	
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
-			$("#tableForm").ajaxSubmit({
+			var fileUrl =$("#upLoad").val();
+			 if(checkExcel(fileUrl)){
+				$("#tableForm").ajaxSubmit({
 				url:'<%=basePath %>productManage?method=product_img_ins',
 				type:'post',
 				dataType : "json",
@@ -123,10 +124,40 @@ html {
 					alert("服务未响应");
 				}
 			});
-		})
+			 }
+		});
 		$("#close_win").on("click", function() {
 			parent.layer.close(index);
 		})
+			function checkExcel(fileUrl) {
+    //检查是否有空格，不允许文件名中存在空格
+    if (fileUrl.indexOf(" ") >= 0) {
+        alert("文件名不能有空格");
+        return false;
+    }
+    // 为了避免转义反斜杠出问题，这里将对其进行转换
+    var re = /(\\+)/g;
+    var filename = fileUrl.replace(re, "#");
+    // 对路径字符串进行剪切截取
+    var one = filename.split("#");
+    // 获取数组中最后一个，即文件名
+    var two = one[one.length - 1];
+    // 再对文件名进行截取，以取得后缀名
+    var three = two.split(".");
+    // 获取截取的最后一个字符串，即为后缀名
+    var last = three[three.length - 1];
+    // 添加需要判断的后缀名类型
+    var tp = "jpge,png";
+    // 返回符合条件的后缀名在字符串中的位置
+    var rs = tp.indexOf(last);
+    // 如果返回的结果大于或等于0，说明包含允许上传的文件类型
+    if (rs >= 0) {
+        return true;
+    } else {
+        alert("当前只支持文件扩展名为jpge/png的图片文件！");
+        return false;
+    }
+}
 	</script>
 </body>
 

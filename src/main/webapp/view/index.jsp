@@ -46,7 +46,7 @@
 						</ul>
 					</li>
 					<li class="settings hidden-phone">
-						<a href="signin.html" role="button">
+						<a href="login.jsp" role="button">
 							<i class="icon-share-alt"></i>
 						</a>
 					</li>
@@ -110,21 +110,18 @@
 		<!-- main container -->
 		<div class="content">
 			<div class="frame-div">
-				<iframe class="frame" id="mainFrame" name="mainFrame" src="index.jsp"></iframe>
+				<iframe class="frame" id="mainFrame" name="mainFrame" src="fixError.jsp"></iframe>
 			</div>
 		</div>
 
 		<!-- scripts -->
-		<script src="js/jquery-latest.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="<%=basePath %>js/jquery-ui-1.10.2.custom.min.js"></script>
 		<!-- knob -->
-		<script src="js/jquery.knob.js"></script>
+		<script src="<%=basePath %>js/jquery.knob.js"></script>
 		<!-- flot charts -->
-		<script src="js/jquery.flot.js"></script>
-		<script src="js/jquery.flot.stack.js"></script>
-		<script src="js/jquery.flot.resize.js"></script>
-		<script src="js/theme.js"></script>
+		<script src="<%=basePath %>js/jquery.flot.js"></script>
+		<script src="<%=basePath %>js/jquery.flot.stack.js"></script>
+		<script src="<%=basePath %>js/jquery.flot.resize.js"></script>
 
 		<script type="text/javascript">
 			var height = jQuery(window).height();
@@ -141,18 +138,6 @@
 				$(this).prepend("<div class='pointer'><div class='arrow'></div><div class='arrow_border'></div></div>");
 
 			})
-
-			//			$(".func").click(function() {
-			//				//初始化标签
-			//				$(".active").removeClass("active");
-			//				$(".pointer").remove();
-			//
-			//				var obj = $(this).parents(".left-nav-li");
-			//
-			//				obj.addClass("active");
-			//				obj.prepend("<div class='pointer'><div class='arrow'></div><div class='arrow_border'></div></div>");
-			//
-			//			})
 		</script>
 
 	</body>

@@ -70,7 +70,7 @@
 		$(function(){
 			var selectObj =$("#fid");
 			$.ajax({
-				url:'<%=basePath%>newsManage?method=news_type_id_typeName&id=',
+				url:'<%=basePath%>newsManage?method=news_type_sel_id_typeName&id',
 				type:'post',
 				dataType:'json',
 				async:false,

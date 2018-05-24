@@ -11,7 +11,7 @@ public class Article {
 	private String main_content;
 	private String manager_id;
 	private int status;
-	private Timestamp add_timer;
+	private Timestamp add_time;
 
 	public Article() {
 	}
@@ -72,18 +72,18 @@ public class Article {
 		this.status = status;
 	}
 
-	public Timestamp getAdd_timer() {
-		return add_timer;
+	public Timestamp getAdd_time() {
+		return add_time;
 	}
 
-	public void setAdd_timer(Timestamp add_timer) {
-		this.add_timer = add_timer;
+	public void setAdd_time(Timestamp add_time) {
+		this.add_time = add_time;
 	}
 
 	@Override
 	public String toString() {
 		return "Article [id=" + id + ", title=" + title + ", tid=" + tid + ", content=" + content + ", main_content="
-				+ main_content + ", manager_id=" + manager_id + ", status=" + status + ", add_timer=" + add_timer + "]";
+				+ main_content + ", manager_id=" + manager_id + ", status=" + status + ", add_time=" + add_time + "]";
 	}
 
 }

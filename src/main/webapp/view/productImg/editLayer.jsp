@@ -41,9 +41,13 @@ html {
 							<label>序号:</label> <input class="span5 inline-input" type="text"
 								name="sort" value="${data.data.sort }" placeholder="请输入序号..." />
 						</div>
-						<div class="field-box">
+						<div class="field-box" style="max-width:600px;max-height:300px;">
+								<label>图片详情</label>
+                                <img src="<%=imgRootUrl %>${data.data.img_url }" />
+                            </div>
+						<!-- <div class="field-box">
 							<label>图片文件:</label> <input type="file" name="img" />
-						</div>
+						</div> -->
 						<div class="field-box">
 							<label>所属产品</label>
 							<div class="ui-select">
@@ -108,16 +112,16 @@ html {
 		})
 		
 		$("#pid option").each(function(){
-			if(this.value == $("#pidCode").val()){
-				this.attr("selected","selected");
-					break;
+			if(this.value == $("#tidCode").val()){
+				 $(this).attr("selected","selected");
+				return;
 			}
 		})
 	});
 	
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
-			$("#tableForm").ajaxSubmit({
+				$("#tableForm").ajaxSubmit({
 				url:'<%=basePath%>productManage?method=product_img_ins',
 				type:'post',
 				dataType : "json",

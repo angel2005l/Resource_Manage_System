@@ -42,20 +42,18 @@
 									<th class="span3"><span class="line"></span>标题</th>
 									<th class="span3"><span class="line"></span>图片索引码</th>
 									<th class="span3"><span class="line"></span>所属新闻编码</th>
-									<th class="span1"><span class="line"></span>排序</th>
 									<th class="span1"><span class="line"></span>状态</th>
 									<th class="span2"><span class="line"></span>操作</th>
 								</tr>
 							</thead>
 							<tbody>
 								<!-- row -->
-								<c:forEach items="${data.data }" var="b" varStatus="s">
+								<c:forEach items="${data.data.list }" var="b" varStatus="s">
 									<tr>
-										<td>${b.count }</td>
+										<td>${s.count }</td>
 										<td>${b.title }</td>
 										<td>${b.url }</td>
 										<td>${b.aid }</td>
-										<td>${b.sort }</td>
 										<td><span
 											<c:choose>
 												<c:when test="${b.status==0 }">class="label label-important" </c:when>
@@ -71,7 +69,6 @@
 										</c:if></td>
 									</tr>
 								</c:forEach>
-								
 							</tbody>
 						</table>
 					</div>
@@ -83,8 +80,8 @@
 			function addNewsImg() {
 				layer.open({
 					type: 2,
-					title: '新闻图片添加',
-					area: ['400px', '530px'],
+					title: '添加新闻图片',
+					area: ['400px', '473px'],
 					shadeClose: false, //点击遮罩关闭
 					content: 'view/newsImg/addLayer.jsp'
 					//					content:'grids.html'
@@ -94,10 +91,10 @@
 			function edit(id){
 				layer.open({
 					type:2,
-					title:'新闻图片修改',
-					area : [ '400px', '500px' ],
+					title:'修改新闻图片',
+					area : [ '400px', '486px' ],
 					shadeClose : false, //点击遮罩关闭
-					content: '<%=basePath %>newsManage?method=news_sel_id&id='+id
+					content: '<%=basePath %>newsManage?method=news_img_sel_id&id='+id
 				})			
 			}
 			function del(id){

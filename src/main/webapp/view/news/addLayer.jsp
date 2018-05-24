@@ -34,10 +34,6 @@ html {
 								type="text" name="title" placeholder="请输入新闻标题..." />
 						</div>
 						<div class="field-box">
-							<label>序号:</label> <input class="span5 inline-input" type="text"
-								name="sort" placeholder="请输入序号..." />
-						</div>
-						<div class="field-box">
 							<label>主要内容（摘要）</label>
 							<textarea class="span5" name="main_content" rows="2"></textarea>
 						</div>
@@ -48,16 +44,16 @@ html {
 						<div class="field-box">
 							<label>所属分类</label>
 							<div class="ui-select">
-								<select id="fid" name="fid">
-									<option value="0" selected="selected">主级新闻分类</option>
+								<select id="tid" name="tid">
+									<option value="" selected="selected">请选择新闻分类</option>
 								</select>
 							</div>
 						</div>
 						<div class="field-box">
 							<label>状态:</label> <label style="width: 20%;"><input
-								type="radio" name="stauts" value="1" checked="checked" />正常</label> <label
+								type="radio" name="status" value="1" checked="checked" />正常</label> <label
 								style="width: 20%; float: left;"><input type="radio"
-								name="stauts" value="2" />锁定</label>
+								name="status" value="2" />锁定</label>
 						</div>
 						<div class="alert alert-info">
 							<i class="icon-exclamation-sign"></i>请认真填写新闻信息
@@ -79,13 +75,13 @@ html {
 		$(function(){
 			var selectObj =$("#tid");
 			$.ajax({
-				url:'<%=basePath%>newsManage?method=news_type_id_typeName',
+				url:'<%=basePath%>newsManage?method=news_type_sel_id_typeName&id',
 				type:'post',
 				dataType:'json',
 				async:false,
 				success:function(result){
 						selectObj.empty();
-						selectObj.append($("<option />").text("主级新闻分类").attr("value","").attr("selected","selected"));
+						selectObj.append($("<option />").text("请选择新闻分类").attr("value","").attr("selected","selected"));
 					if(result.code ==0){
 						$(result.data).each(function(){
 							selectObj.append($("<option />").text(this.value).attr("value",this.code));
