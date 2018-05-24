@@ -15,11 +15,13 @@ public class Page<T> {
 	private int showCount; // 每页显示记录数
 	private int totalPage; // 总页数
 	private int totalResult; // 总记录数
+	private int page;// 当前页数
 	private List<T> list;
 
-	public Page(int showCount, int totalResult, List<T> list) {
+	public Page(int showCount, int totalResult, int page, List<T> list) {
 		this.showCount = showCount;
 		this.totalResult = totalResult;
+		this.page = page;
 		this.list = list;
 		this.setTotalPage(totalResult);
 	}
@@ -57,6 +59,14 @@ public class Page<T> {
 
 	public void setList(List<T> list) {
 		this.list = list;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 }

@@ -169,11 +169,11 @@ public class BaseResult {
 		return new Result<T>(code, msg, data);
 	}
 
-	public <T> Result<Page<T>> rtnPageWithCount(int code, String msg, int showCount, int totalResult, List<T> list) {
+	public <T> Result<Page<T>> rtnPageWithCount(int code, String msg, int showCount,String page, int totalResult, List<T> list) {
 		// private int showCount; // 每页显示记录数
 		// private int totalPage; // 总页数
 		// private int totalResult; // 总记录数
-		return new Result<Page<T>>(code, msg, new Page<>(showCount, totalResult, list));
+		return new Result<Page<T>>(code, msg, new Page<>(showCount, totalResult,Integer.parseInt(page), list));
 
 	}
 
