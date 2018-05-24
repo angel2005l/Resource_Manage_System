@@ -49,7 +49,7 @@ public class UserServiceImpl extends BaseResult implements IUserService {
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
-		System.err.println(resultJson);
+		//System.err.println(resultJson);
 		if (jb.getIntValue("code") != 0) {
 			return rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
 		} else {

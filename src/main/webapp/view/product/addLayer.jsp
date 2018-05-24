@@ -7,9 +7,8 @@
 <title>产品信息弹窗</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- this page specific styles -->
-<link rel="stylesheet"
-	href="<%=basePath%>css/compiled/personal-info.css" type="text/css"
-	media="screen" />
+    <link href="<%=basePath%>css/lib/bootstrap-wysihtml5.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="<%=basePath%>css/compiled/personal-info.css" type="text/css" media="screen" />
 
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -32,10 +31,11 @@ html {
 				<div class="span7 personal-info">
 					<form id="tableForm">
 						<div class="field-box">
-							<label>产品名称:</label> <input class="span5 inline-input" name="product_name" type="text" placeholder="请输入产品名称..." />
+							<label>产品名称:</label> <input class="span5 inline-input"
+								name="product_name" type="text" placeholder="请输入产品名称..." />
 						</div>
 						<div class="field-box">
-							<label>产品型号:</label> <input class="span5 inline-input" 
+							<label>产品型号:</label> <input class="span5 inline-input"
 								name="item_no" type="text" placeholder="请输入产品型号..." />
 						</div>
 						<div class="field-box">
@@ -47,16 +47,20 @@ html {
 								name="price" type="text" placeholder="请输入产品售价..." />
 						</div>
 						<div class="field-box">
-							<label>序号:</label> <input class="span5 inline-input" type="text" name = "sort"
-								placeholder="请输入序号..." />
+							<label>序号:</label> <input class="span5 inline-input" type="text"
+								name="sort" placeholder="请输入序号..." />
 						</div>
 						<div class="field-box">
 							<label>产品详情</label>
-							<textarea class="span5" name="info" rows="2" placeholder="请输入产品详情"></textarea>
+							<div class="wysi-column">
+									<textarea id="wysi" name="test" class="span7 wysihtml5" rows="5" placeholder="请输入产品详情"></textarea>
+								</div>
+							<!-- <textarea class="span5" name="info" rows="2" placeholder="请输入产品详情"></textarea> -->
 						</div>
 						<div class="field-box">
 							<label>备注</label>
-							<textarea class="span5" name="remark" rows="2" placeholder="请输入产品备注"></textarea>
+							<textarea class="span5" name="remark" rows="2"
+								placeholder="请输入产品备注"></textarea>
 						</div>
 						<div class="field-box">
 							<label>所属产品分类</label>
@@ -79,8 +83,9 @@ html {
 							<i class="icon-exclamation-sign"></i>请认真填写产品信息
 						</div>
 						<div class="field-box actions">
-							<input id="sumbit_form" type="button" class="btn-flat primary" value="保存" /> <input
-								id="close_win" type="button" class="btn-flat danger" value="取消" />
+							<input id="sumbit_form" type="button" class="btn-flat primary"
+								value="保存" /> <input id="close_win" type="button"
+								class="btn-flat danger" value="取消" />
 						</div>
 					</form>
 				</div>
@@ -88,14 +93,21 @@ html {
 		</div>
 	</div>
 	<!-- end main container -->
-
 	<!-- scripts -->
-	<script type="text/javascript" src="<%=basePath %>js/jquery.form.js"></script>
+	<script src="<%=basePath%>js/wysihtml5-0.3.0.js"></script>
+    <script src="<%=basePath%>js/jquery-latest.js"></script>
+    <script src="<%=basePath%>js/bootstrap.min.js"></script>
+    <script src="<%=basePath%>js/bootstrap-wysihtml5-0.0.2.js"></script>
+    <script src="<%=basePath%>js/theme.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/jquery.form.js"></script>
 	<script>
 		$(function(){
+			$(".wysihtml5").wysihtml5({
+				"font-styles": false
+			});
 			var selectObj =$("#tid");
 			$.ajax({
-				url:'<%=basePath %>productManage?method=product_type_id_typeName&id=',
+				url:'<%=basePath%>productManage?method=product_type_id_typeName&id=',
 				type:'post',
 				dataType:'json',
 				async:false,
@@ -119,25 +131,24 @@ html {
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 			$("#tableForm").ajaxSubmit({
-				url:'<%=basePath %>productManage?method=product_ins',
+				url:'<%=basePath%>productManage?method=product_ins',
 				type:'post',
 				dataType:'json',
 				success:function(result){
 					alert(result.msg);
 					if(result.code == 0){
-						parent.location.href='<%=basePath %>productManage?method=product_sel';
+						parent.location.href='<%=basePath%>productManage?method=product_sel';
 						parent.layer.close(index);
-					}else{
-						return;
-					}
-				},
-				error:function(){
-					alert("服务未响应");
-				}
+						} else {
+							return;
+							}
+					},
+					error : function() {
+						alert("服务未响应");
+						}
+					});
 			});
-		});
-		
-		
+
 		$("#close_win").on("click", function() {
 			parent.layer.close(index);
 		})

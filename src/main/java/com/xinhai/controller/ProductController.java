@@ -187,7 +187,7 @@ public class ProductController extends HttpServlet {
 			ProductType data = new ProductType();
 			data.setType_name(type_name);
 			Result<Page<ProductType>> selProductType = service.selProductType("10", StrUtil.isBlank(page)? "1":page, data);
-			System.err.println(selProductType);
+			//System.err.println(selProductType);
 			request.setAttribute("data", selProductType);
 		} catch (Exception e) {
 			log.error("查询产品分类信息异常,异常原因:【" + e.toString() + "】");
@@ -363,6 +363,8 @@ public class ProductController extends HttpServlet {
 	private void selProduct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			String parameter = request.getParameter("test");
+			System.err.println(parameter);
 			String product_name = request.getParameter("product_name");
 			String page = request.getParameter("page");
 			Product data = new Product();
@@ -389,7 +391,7 @@ public class ProductController extends HttpServlet {
 	private void selProductById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
-		System.err.println(id);
+		//System.err.println(id);
 		try {
 			Result<Product> selProductById = StrUtil.isBlank(id) ? new Result<Product>(Result.ERROR_4000, "参数错误")
 					: service.selProductById(id);
@@ -521,7 +523,7 @@ public class ProductController extends HttpServlet {
 				uploadImg = QniuUtil.uploadImg(inputStream, prefixProductImg + DateUtil.curDateYMDHMSSForService());
 				ProductImg tempData = IOUtil.deepClone(data);
 				tempData.setImg_url(uploadImg.key);
-				System.err.println(tempData);
+				//System.err.println(tempData);
 				Result<Object> result = service.insProductImg(tempData);
 				json = JSON.toJSONString(result);
 				if (result.getCode() != 0) {
@@ -568,7 +570,7 @@ public class ProductController extends HttpServlet {
 		} catch (Exception e) {
 			log.error("查询全部的产品图片异常,异常原因:【" + e.toString() + "】");
 		}
-		System.err.println("dasd");
+		//System.err.println("dasd");
 		request.getRequestDispatcher("view/productImg/index.jsp").forward(request, response);
 	}
 

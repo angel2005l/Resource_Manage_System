@@ -179,7 +179,7 @@ public class NewsController extends HttpServlet {
 		data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
 		data.setStatus(StrUtil.isBlank(sort) ? 1 : Integer.parseInt(status));
 		data.setType_name(typeName);
-		System.err.println(data);
+		//System.err.println(data);
 		try {
 			Result<Object> insNewsType = service.insNewsType(data);
 			json = JSON.toJSONString(insNewsType);
@@ -204,12 +204,12 @@ public class NewsController extends HttpServlet {
 	private void selNewsTypeById(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String id = request.getParameter("id");
-		System.err.println(id);
+		//System.err.println(id);
 		try {
 			Result<ArticleType> selNewsTypeById = StrUtil.isBlank(id)
 					? new Result<ArticleType>(Result.ERROR_4000, "参数错误")
 					: service.selNewsTypeById(id);
-			System.err.println(selNewsTypeById.getCode() + selNewsTypeById.getMsg() + selNewsTypeById.getData());
+			//System.err.println(selNewsTypeById.getCode() + selNewsTypeById.getMsg() + selNewsTypeById.getData());
 			request.setAttribute("data", selNewsTypeById);
 		} catch (Exception e) {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的新闻分类异常"));
@@ -289,7 +289,7 @@ public class NewsController extends HttpServlet {
 	private void delNewsType(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String id = request.getParameter("id");
 		String json = "";
-		System.err.println(id);
+//		System.err.println(id);
 		try {
 			Result<Object> delNewsType = service.delNewsType(id);
 			json = JSON.toJSONString(delNewsType);
@@ -331,7 +331,7 @@ public class NewsController extends HttpServlet {
 		data.setContent(content);
 		data.setManager_id(session.getAttribute("user_name").toString());
 		data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
-		System.err.println(data);
+		//System.err.println(data);
 		try {
 			Result<Object> insNews = service.insNews(data);
 			json = JSON.toJSONString(insNews);
@@ -419,7 +419,7 @@ public class NewsController extends HttpServlet {
 		data.setMain_content(mainContent);
 		data.setContent(content);
 		data.setStatus(Integer.parseInt(status));
-		System.err.println(data);
+		//System.err.println(data);
 		try {
 			Result<Object> uptNews = service.uptNews(data);
 			json = JSON.toJSONString(uptNews);
@@ -488,7 +488,7 @@ public class NewsController extends HttpServlet {
 			Map<String, Object> multipartData = IOUtil.getMultipartData2Bean(request, ArticleImg.class);// 获得文件流和普通表单JavaBean集合
 			List<InputStream> streams = (List<InputStream>) multipartData.get("stream");
 			ArticleImg data = (ArticleImg) multipartData.get("formField");
-			System.err.println(data);
+			//System.err.println(data);
 			for (InputStream inputStream : streams) {
 				DefaultPutRet uploadImg;
 				uploadImg = QniuUtil.uploadImg(inputStream, prefixNewsImg + DateUtil.curDateYMDHMSSForService());
@@ -519,7 +519,7 @@ public class NewsController extends HttpServlet {
 
 	private void selNewsImg(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.err.println("dasds");
+		//System.err.println("dasds");
 		try {
 			String title = request.getParameter("title");
 			String page = request.getParameter("page");

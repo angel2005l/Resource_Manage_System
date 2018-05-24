@@ -86,7 +86,7 @@
 		</div>
 		<script type="text/javascript">
 			function addNewsImg() {
-				layer.open({
+				var index = layer.open({
 					type: 2,
 					title: '添加新闻图片',
 					area: ['400px', '473px'],
@@ -94,16 +94,18 @@
 					content: 'view/newsImg/addLayer.jsp'
 					//					content:'grids.html'
 				});
+				layer.full(index);
 			}
 			
 			function edit(id){
-				layer.open({
+				var index = layer.open({
 					type:2,
 					title:'修改新闻图片',
 					area : [ '400px', '486px' ],
 					shadeClose : false, //点击遮罩关闭
 					content: '<%=basePath %>newsManage?method=news_img_sel_id&id='+id
-				})			
+				});
+				layer.full(index);
 			}
 			function del(id){
 				$.ajax({

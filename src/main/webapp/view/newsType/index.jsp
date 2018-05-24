@@ -97,15 +97,17 @@
 					shadeClose: false, //点击遮罩关闭
 					content: 'view/newsType/addLayer.jsp'
 				})
+				layer.full(index);
 			}
 			function edit(id){
-				layer.open({
+				var index = layer.open({
 					type:2,
 					title:'修改新闻分类',
 					area : [ '400px', '500px' ],
 					shadeClose : false, //点击遮罩关闭
 					content: '<%=basePath %>newsManage?method=news_type_sel_id&id='+id
-				})			
+				});
+				layer.full(index);
 			}
 			function del(id){
 				$.ajax({

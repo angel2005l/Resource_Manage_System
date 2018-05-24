@@ -91,7 +91,7 @@
 			layer.open({
 				type : 2,
 				title : '产品分类添加',
-				area : [ '400px', '473px' ],
+				area : [ '600px', '473px' ],
 				shadeClose : false, //点击遮罩关闭
 				content : 'view/productType/addLayer.jsp'
 			//					content:'grids.html'
@@ -101,10 +101,10 @@
 			layer.open({
 				type:2,
 				title:'产品分类修改',
-				area : [ '400px', '473px' ],
+				area : [ '600px', '473px' ],
 				shadeClose : false, //点击遮罩关闭
 				content: '<%=basePath %>productManage?method=product_type_sel_id&id='+id
-			})			
+			});
 		}
 		function del(id){
 			$.ajax({

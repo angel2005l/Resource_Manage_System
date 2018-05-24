@@ -101,7 +101,7 @@
 		})
 	
 			function addNews() {
-				layer.open({
+				var index = layer.open({
 					type: 2,
 					title:'新闻信息添加',
 					area: ['400px', '500px'],
@@ -109,16 +109,18 @@
 					content: 'view/news/addLayer.jsp'
 //					content:'grids.html'
 				});
+				layer.full(index);
 			}
 			
 			function edit(id){
-				layer.open({
+				var index = layer.open({
 					type:2,
 					title:'修改新闻信息',
 					area : [ '400px', '500px' ],
 					shadeClose : false, //点击遮罩关闭
 					content: '<%=basePath%>newsManage?method=news_sel_id&id='+id
-				})			
+				});
+				layer.full(index);
 			}
 			function del(id){
 				$.ajax({

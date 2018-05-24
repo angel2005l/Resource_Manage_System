@@ -136,7 +136,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("add_time", DateUtil.curDateYMDHMS()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
-		System.err.println(params);
+		//System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
@@ -168,7 +168,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("parameter", "getProductById"));
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
-		System.err.println(resultJson);
+		//System.err.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		return 0 == jb.getIntValue("code") ? rtnSuccessResult("", JSON.parseObject(jb.getString("data"), Product.class))
 				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));
@@ -240,7 +240,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("is_main", data.getIs_main() + ""));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
-		System.err.println(params);
+		//System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
@@ -285,7 +285,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("id", id));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
-		System.err.println(resultJson);
+		//System.err.println(resultJson);
 		return 0 == jb.getIntValue("code")
 				? rtnSuccessResult("", JSON.parseObject(jb.getString("data"), ProductImg.class))
 				: rtnFailResult(jb.getIntValue("code"), jb.getString("msg"));

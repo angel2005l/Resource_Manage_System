@@ -86,7 +86,7 @@
 	</div>
 	<script type="text/javascript">
 			function addProductType() {
-				layer.open({
+				var index = layer.open({
 					type: 2,
 					title: '产品图片添加',
 					area: ['400px', '530px'],
@@ -94,15 +94,17 @@
 					content: 'view/productImg/addLayer.jsp'
 					//					content:'grids.html'
 				});
+				layer.full(index);
 			}
 			function edit(id){
-				layer.open({
+				var index = layer.open({
 					type:2,
 					title:'产品图片修改',
 					area: ['400px', '530px'],
 					shadeClose : false, //点击遮罩关闭
 					content: '<%=basePath%>productManage?method=product_img_sel_id&id='+id
-				})			
+				})
+				layer.full(index);
 			}
 			function del(id){
 				$.ajax({

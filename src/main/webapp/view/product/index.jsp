@@ -95,22 +95,24 @@
 	</div>
 	<script type="text/javascript">
 		function addProduct() {
-			layer.open({
+			var index = layer.open({
 				type : 2,
 				title : '产品信息添加',
 				area : [ '400px', '500px' ],
 				shadeClose : false, //点击遮罩关闭
 				content : 'view/product/addLayer.jsp'
 			});
+			layer.full(index);
 		}
 		function edit(id){
-			layer.open({
+			var index =layer.open({
 				type:2,
 				title:'产品分类修改',
 				area : [ '400px', '500px' ],
 				shadeClose : false, //点击遮罩关闭
 				content: '<%=basePath %>productManage?method=product_sel_id&id='+id
-			})			
+			})
+			layer.full(index);
 		}
 		function del(id){
 			$.ajax({

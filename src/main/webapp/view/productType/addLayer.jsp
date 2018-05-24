@@ -42,8 +42,6 @@ html {
 							<div class="ui-select">
 								<select id="fid" name="fid">
 									<option value="" selected="selected">主级产品分类</option>
-									<option value="CGYL-001">常规医疗用品</option>
-									<option value="ZNYL-001">智能化医疗用品</option>
 								</select>
 							</div>
 						</div>
@@ -71,6 +69,30 @@ html {
 <script src="<%=basePath %>js/jquery.form.js"></script>
 
 	<script>
+	$(function(){
+		var selectObj =$("#fid");
+		$.ajax({
+			url:'<%=basePath %>productManage?method=product_type_id_typeName&id=',
+			type:'post',
+			dataType:'json',
+			async:false,
+			success:function(result){
+					selectObj.empty();
+					selectObj.append($("<option />").text("请选择产品分类").attr("value","").attr("selected","selected"));
+				if(result.code ==0){
+					$(result.data).each(function(){
+						selectObj.append($("<option />").text(this.value).attr("value",this.code));
+					})
+				}else{
+					alert(result.msg);
+				}
+			},
+			error:function(){
+				alert("服务未响应")
+			}
+		})
+	});
+	
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 			$("#tableForm").ajaxSubmit({
