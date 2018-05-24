@@ -101,11 +101,11 @@ public class ProductController extends HttpServlet {
 			selProductIdAndProductName(req, resp);
 			break;
 		case "product_img_ins":
-			//2
+			// 2
 			insProductImg(req, resp);
 			break;
 		case "product_img_sel":
-			//1
+			// 1
 			selProductImg(req, resp);
 			break;
 		// case "product_img_sel_pId":
@@ -117,7 +117,7 @@ public class ProductController extends HttpServlet {
 			uptProductImg(req, resp);
 			break;
 		case "product_img_del":
-			//2
+			// 2
 			delProductImg(req, resp);
 			break;
 		default:
@@ -182,7 +182,11 @@ public class ProductController extends HttpServlet {
 	private void selProductType(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Result<Page<ProductType>> selProductType = service.selProductType("20");
+			String type_name = request.getParameter("type_name");
+			String page = request.getParameter("page");
+			ProductType data = new ProductType();
+			data.setType_name(type_name);
+			Result<Page<ProductType>> selProductType = service.selProductType("10", StrUtil.isBlank(page)? "1":page, data);
 			System.err.println(selProductType);
 			request.setAttribute("data", selProductType);
 		} catch (Exception e) {
@@ -359,7 +363,11 @@ public class ProductController extends HttpServlet {
 	private void selProduct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Result<Page<Product>> selProduct = service.selProduct("10");
+			String product_name = request.getParameter("product_name");
+			String page = request.getParameter("page");
+			Product data = new Product();
+			data.setProduct_name(product_name);
+			Result<Page<Product>> selProduct = service.selProduct("10",StrUtil.isBlank(page)? "1":page,data);
 			request.setAttribute("data", selProduct);
 		} catch (Exception e) {
 			log.error("查询全部的产品信息异常,异常原因:【" + e.toString() + "】");
@@ -510,8 +518,7 @@ public class ProductController extends HttpServlet {
 			ProductImg data = (ProductImg) multipartData.get("formField");
 			for (InputStream inputStream : streams) {
 				DefaultPutRet uploadImg;
-				uploadImg = QniuUtil.uploadImg(inputStream,
-						prefixProductImg + DateUtil.curDateYMDHMSSForService());
+				uploadImg = QniuUtil.uploadImg(inputStream, prefixProductImg + DateUtil.curDateYMDHMSSForService());
 				ProductImg tempData = IOUtil.deepClone(data);
 				tempData.setImg_url(uploadImg.key);
 				System.err.println(tempData);
@@ -546,12 +553,17 @@ public class ProductController extends HttpServlet {
 	 * @version 1.0
 	 * @param request
 	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * @throws IOException
+	 * @throws ServletException
 	 */
-	private void selProductImg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void selProductImg(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
-			Result<Page<ProductImg>> selProductImg = service.selProductImg("10");
+			String title = request.getParameter("title");
+			String page = request.getParameter("page");
+			ProductImg data = new ProductImg();
+			data.setTitle(title);
+			Result<Page<ProductImg>> selProductImg = service.selProductImg("10",StrUtil.isBlank(page)? "1":page,data);
 			request.setAttribute("data", selProductImg);
 		} catch (Exception e) {
 			log.error("查询全部的产品图片异常,异常原因:【" + e.toString() + "】");

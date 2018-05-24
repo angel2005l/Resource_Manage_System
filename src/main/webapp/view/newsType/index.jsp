@@ -28,11 +28,16 @@
 					</div>
 
 					<div class="row-fluid filter-block">
+					<form id="searchForm"
+						action="<%=basePath%>newsManage?method=news_type_sel" method="post">
 						<div class="pull-right">
-							<input type="text" class="search" />
-							<a class="btn-flat success new-product">查询</a>
+							<input type="text" class="search" name="type_name" placeholder="请输入新闻分类名称关键字" />
+							<input type="hidden" id="pageNum" name="pageNum" value="${data.data.totalPage }">
+							<input type="hidden" id="page" name = "page" value="${data.data.page==0 ? 1: data.data.page}" /> <a
+								class="btn-flat success new-product" onclick="searchBtn('q')">查询</a>
 							<a class="btn-flat success new-product" onclick="addNewsType()">添加新闻分类</a>
 						</div>
+						</form>
 					</div>
 
 					<div class="row-fluid">
@@ -73,6 +78,10 @@
 							</tbody>
 						</table>
 					</div>
+					<div class="pagination pull-right">
+					<ul id="pagingBtn">
+					</ul>
+					</div>
 				</div>
 				<!-- end products table -->
 			</div>
@@ -112,6 +121,41 @@
 						alert("服务未响应");
 					}
 				});
+			}
+			$(function(){
+				var pageNum = $("#pageNum").val();
+				var pagingBth = $("#pagingBtn");
+				pagingBth.empty();
+				var htmlStr = "<li><a onclick=searchBtn('back')>&#8249;</a></li>";
+				  for(var index=0 ;index < (pageNum ==0? 1: pageNum);index++){
+					htmlStr += "<li><a onclick=searchBtn('"+(index+1)+"')>"+(index+1)+"</a></li>";
+				}  
+				htmlStr += "<li><a onclick=searchBtn('next')>&#8250;</a></li>";
+				pagingBth.append(htmlStr);
+			})
+			
+			function searchBtn(msg){
+				var page = $("#page");
+				var pageNum = $("#pageNum").val();
+				switch (msg) {
+				case "q":
+					page.val(1);
+					break;
+				case "back":
+					if(page.val()>1){
+						page.val(page.val()-1)
+					}				
+					break;
+				case"next":
+					if(page.val() < pageNum){
+						page.val((page.val()-0+1));
+					}
+					break;
+				default:
+					page.val(parseInt(msg));
+					break;
+				}
+				$("#searchForm").submit();
 			}
 		</script>
 

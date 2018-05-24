@@ -19,7 +19,7 @@ public interface INewsService {
 	public Result<Object> insNewsType(ArticleType data) throws Exception;
 
 	// 查询新闻类型信息
-	public Result<Page<ArticleType>> selNewsTypes(String showCount) throws Exception;
+	public Result<Page<ArticleType>> selNewsTypes(String showCount,String page,ArticleType data) throws Exception;
 
 	// 查询除了特定id以外的所有的 分类名和id
 	public Result<List<Map<String, Object>>> selNewsTypeIdAndTypeName(String id) throws Exception;
@@ -41,7 +41,7 @@ public interface INewsService {
 	public Result<Object> insNews(Article data) throws Exception;
 
 	// 查询信息
-	public Result<Page<Article>> selNews(String showCount) throws Exception;
+	public Result<Page<Article>> selNews(String showCount,String page,Article data) throws Exception;
 
 	// 查询特定新闻
 	public Result<Article> selNewsById(String id) throws Exception;
@@ -56,7 +56,7 @@ public interface INewsService {
 
 	public Result<Object> insNewsImg(ArticleImg data) throws Exception;
 
-	public Result<Page<ArticleImg>> selNewsImg(String showCount) throws Exception;
+	public Result<Page<ArticleImg>> selNewsImg(String showCount,String page,ArticleImg data) throws Exception;
 
 	public Result<ArticleImg> selNewsImgById(String id) throws Exception;
 

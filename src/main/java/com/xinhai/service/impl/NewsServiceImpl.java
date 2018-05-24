@@ -36,7 +36,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
-		System.err.println("json报文："+resultJson);
+		System.err.println("json报文：" + resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
 		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("添加新闻分类成功")
@@ -44,19 +44,21 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 	}
 
 	@Override
-	public Result<Page<ArticleType>> selNewsTypes(String showCount) throws Exception {
+	public Result<Page<ArticleType>> selNewsTypes(String showCount,String page,ArticleType data) throws Exception {
 		String url = rb.getString("news_type_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		// params.add(new BasicNameValuePair("", value));
 		params.add(new BasicNameValuePair("parameter", "getArticleTypeByName"));
-		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("type_name", data.getType_name()));
+		params.add(new BasicNameValuePair("page", page));
 		params.add(new BasicNameValuePair("pageSize", showCount));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		System.err.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		// data 有隔层
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),page,
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ArticleType.class));
 	}
 
@@ -152,18 +154,20 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 	}
 
 	@Override
-	public Result<Page<Article>> selNews(String showCount) throws Exception {
+	public Result<Page<Article>> selNews(String showCount, String page, Article data) throws Exception {
 		String url = rb.getString("news_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		// params.add(new BasicNameValuePair("", value));
 		params.add(new BasicNameValuePair("parameter", "selectArticleByTitle"));
-		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("title", data.getTitle()));
+		params.add(new BasicNameValuePair("page", page));
 		params.add(new BasicNameValuePair("pageSize", showCount));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		// data 有隔层
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),page,
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), Article.class));
 	}
 
@@ -253,18 +257,21 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 	}
 
 	@Override
-	public Result<Page<ArticleImg>> selNewsImg(String showCount) throws Exception {
+	public Result<Page<ArticleImg>> selNewsImg(String showCount,String page,ArticleImg data) throws Exception {
 		String url = rb.getString("news_img_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		// params.add(new BasicNameValuePair("", value));
 		params.add(new BasicNameValuePair("parameter", "selectArticleImg"));
-		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("title", data.getTitle()));
+		params.add(new BasicNameValuePair("page", page));
 		params.add(new BasicNameValuePair("pageSize", showCount));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
+		System.err.println(resultJson);
 		// data 有隔层
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),page,
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ArticleImg.class));
 	}
 
@@ -292,7 +299,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
 		params.add(new BasicNameValuePair("title", data.getTitle()));
 		params.add(new BasicNameValuePair("aid", data.getAid() + ""));
-//		params.add(new BasicNameValuePair("url", data.getUrl()));
+		// params.add(new BasicNameValuePair("url", data.getUrl()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);

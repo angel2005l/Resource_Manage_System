@@ -14,7 +14,7 @@ public interface IProductService {
 	// 产品分类管理
 	public Result<Object> insProductType(ProductType data) throws Exception;
 
-	public Result<Page<ProductType>> selProductType(String showCount) throws Exception;
+	public Result<Page<ProductType>> selProductType(String showCount,String page,ProductType data) throws Exception;
 
 	public Result<ProductType> selProductTypeById(String id) throws Exception;
 
@@ -28,7 +28,7 @@ public interface IProductService {
 
 	public Result<Object> insProduct(Product data) throws Exception;
 
-	public Result<Page<Product>> selProduct(String showCount) throws Exception;
+	public Result<Page<Product>> selProduct(String showCount,String page,Product data) throws Exception;
 
 	public Result<Product> selProductById(String id) throws Exception;
 
@@ -41,7 +41,7 @@ public interface IProductService {
 	// 产品图片管理
 	public Result<Object> insProductImg(ProductImg data) throws Exception;
 
-	public  Result<Page<ProductImg>> selProductImg(String showCount) throws Exception;
+	public  Result<Page<ProductImg>> selProductImg(String showCount,String page,ProductImg data) throws Exception;
 
 	public Result<List<ProductImg>> selProductionImgByProId(String proId) throws Exception;
 

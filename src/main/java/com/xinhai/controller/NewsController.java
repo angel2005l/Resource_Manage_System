@@ -145,7 +145,11 @@ public class NewsController extends HttpServlet {
 	private void selNewsType(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Result<Page<ArticleType>> selNewsTypes = service.selNewsTypes("10");
+			String type_name = request.getParameter("type_name");
+			String page = request.getParameter("page");
+			ArticleType data = new ArticleType();
+			data.setType_name(type_name);
+			Result<Page<ArticleType>> selNewsTypes = service.selNewsTypes("10",StrUtil.isBlank(page)? "1":page,data);
 			request.setAttribute("data", selNewsTypes);
 		} catch (Exception e) {
 			log.error("查询新闻分类异常,异常原因：【" + e.toString() + "】");
@@ -352,7 +356,11 @@ public class NewsController extends HttpServlet {
 	private void selNews(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			Result<Page<Article>> selNews = service.selNews("10");
+			String title = request.getParameter("title");
+			String page = request.getParameter("page");
+			Article data = new Article();
+			data.setTitle(title);
+			Result<Page<Article>> selNews = service.selNews("10",StrUtil.isBlank(page)? "1":page,data);
 			request.setAttribute("data", selNews);
 		} catch (Exception e) {
 			log.error("查询新闻信息异常,:异常原因:【" + e.toString() + "】");
@@ -511,8 +519,14 @@ public class NewsController extends HttpServlet {
 
 	private void selNewsImg(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.err.println("dasds");
 		try {
-			Result<Page<ArticleImg>> selNewsImg = service.selNewsImg("10");
+			String title = request.getParameter("title");
+			String page = request.getParameter("page");
+			ArticleImg data = new ArticleImg();
+			data.setTitle(title);
+			
+			Result<Page<ArticleImg>> selNewsImg = service.selNewsImg("10",StrUtil.isBlank(page)? "1":page,data);
 			request.setAttribute("data", selNewsImg);
 		} catch (Exception e) {
 			log.error("查询新闻信息异常,:异常原因:【" + e.toString() + "】");
@@ -534,7 +548,6 @@ public class NewsController extends HttpServlet {
 		request.getRequestDispatcher("view/newsImg/editLayer.jsp").forward(request, response);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void uptNewsImg(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String json = "";
 		// String prefixNewsImg = Constant.PREFIXNEWSIMG;

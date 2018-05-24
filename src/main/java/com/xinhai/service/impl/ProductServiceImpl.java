@@ -41,18 +41,18 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<Page<ProductType>> selProductType(String showCount) throws Exception {
+	public Result<Page<ProductType>> selProductType(String showCount, String page, ProductType data) throws Exception {
 		String url = rb.getString("product_type_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", "selectProductType"));
-		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("page", page));
 		params.add(new BasicNameValuePair("pageSize", showCount));
 		// params.add(new BasicNameValuePair("", ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		// data 有隔层
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount), page,
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ProductType.class));
 	}
 
@@ -145,18 +145,19 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<Page<Product>> selProduct(String showCount) throws Exception {
+	public Result<Page<Product>> selProduct(String showCount, String page, Product data) throws Exception {
 		String url = rb.getString("product_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", "selectProduct"));
-		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
+		params.add(new BasicNameValuePair("page", page));
 		params.add(new BasicNameValuePair("pageSize", showCount));
 		// params.add(new BasicNameValuePair("", ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount), page,
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), Product.class));
 	}
 
@@ -248,17 +249,18 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 	}
 
 	@Override
-	public Result<Page<ProductImg>> selProductImg(String showCount) throws Exception {
+	public Result<Page<ProductImg>> selProductImg(String showCount, String page, ProductImg data) throws Exception {
 		String url = rb.getString("product_img_sel");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", "selectProductImg"));
-		params.add(new BasicNameValuePair("page", "1"));
+		params.add(new BasicNameValuePair("title", data.getTitle()));
+		params.add(new BasicNameValuePair("page", page));
 		params.add(new BasicNameValuePair("pageSize", showCount));
 		// params.add(new BasicNameValuePair("", ""));
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
-		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount),
+		return rtnPageWithCount(jb.getIntValue("code"), jb.getString("msg"), Integer.parseInt(showCount), page,
 				dataJb.getIntValue("totalResult"), JSON.parseArray(dataJb.getString("data"), ProductImg.class));
 	}
 
