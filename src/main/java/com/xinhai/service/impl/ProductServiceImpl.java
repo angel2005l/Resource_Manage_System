@@ -241,7 +241,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("img_type", data.getImg_type()+""));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
-		//System.err.println(params);
+//		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
@@ -305,6 +305,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("img_type", data.getImg_type()+""));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");

@@ -602,19 +602,19 @@ public class ProductController extends HttpServlet {
 		String pid = request.getParameter("pid");
 		String title = request.getParameter("title");
 		String isMain = request.getParameter("is_main");
+		String imgType = request.getParameter("img_type");
 		String status = request.getParameter("status");
 		String sort = request.getParameter("sort");
 		String json = "";
-
 		try {
 			ProductImg data = new ProductImg();
 			data.setId(Integer.parseInt(id));
-			data.setPid(Integer.parseInt(pid));
+			data.setPid(StrUtil.isBlank(pid) ? 0:Integer.parseInt(pid));
 			data.setTitle(title);
 			data.setIs_main(Integer.parseInt(isMain));
+			data.setImg_type(Integer.parseInt(imgType));
 			data.setStatus(Integer.parseInt(status));
 			data.setSort(Integer.parseInt(sort));
-
 			Result<Object> uptProductImg = service.uptProductImg(data);
 			json = JSON.toJSONString(uptProductImg);
 		} catch (NumberFormatException e) {

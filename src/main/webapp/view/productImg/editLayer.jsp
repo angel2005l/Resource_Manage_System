@@ -31,7 +31,8 @@ html {
 				<div class="span1 avatar-box"></div>
 				<!-- edit form column -->
 				<div class="span7 personal-info">
-					<form id="tableForm" enctype="multipart/form-data">
+					<form id="tableForm">
+						<input type="hidden" name="id" value="${data.data.id }">
 						<div class="field-box">
 							<label>图片标题:</label> <input class="span5 inline-input"
 								name="title" value="${data.data.title }" type="text"
@@ -128,7 +129,7 @@ html {
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){
 				$("#tableForm").ajaxSubmit({
-				url:'<%=basePath%>productManage?method=product_img_ins',
+				url:'<%=basePath%>productManage?method=product_img_upt',
 				type:'post',
 				dataType : "json",
 				success:function(result){
