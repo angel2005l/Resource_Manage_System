@@ -54,7 +54,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("pageSize", showCount));
 		//System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
-		//System.err.println(resultJson);
+		//Syserr.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		// data 有隔层
 		JSONObject dataJb = JSON.parseObject(jb.getString("data"));
@@ -147,7 +147,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("manager_id", data.getManager_id()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("add_time", DateUtil.curDateYMDHMS()));
-		System.err.println(params);
+		//System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
@@ -203,7 +203,7 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("type", data.getType()+""));
 		params.add(new BasicNameValuePair("httpurl", data.getHttpurl()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
-		System.err.println(params);
+		//System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		return 0 == jb.getIntValue("code") ? rtnSuccessResult("修改新闻成功")
