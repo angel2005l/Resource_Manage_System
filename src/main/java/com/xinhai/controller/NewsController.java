@@ -133,7 +133,8 @@ public class NewsController extends HttpServlet {
 			String page = request.getParameter("page");
 			ArticleType data = new ArticleType();
 			data.setType_name(type_name);
-			Result<Page<ArticleType>> selNewsTypes = service.selNewsTypes("10",StrUtil.isBlank(page)? "1":page,data);
+			Result<Page<ArticleType>> selNewsTypes = service.selNewsTypes("10", StrUtil.isBlank(page) ? "1" : page,
+					data);
 			request.setAttribute("data", selNewsTypes);
 		} catch (Exception e) {
 			log.error("查询新闻分类异常,异常原因：【" + e.toString() + "】");
@@ -163,7 +164,7 @@ public class NewsController extends HttpServlet {
 		data.setSort(StrUtil.isBlank(sort) ? 0 : Integer.parseInt(sort));
 		data.setStatus(StrUtil.isBlank(sort) ? 1 : Integer.parseInt(status));
 		data.setType_name(typeName);
-		//System.err.println(data);
+		// System.err.println(data);
 		try {
 			Result<Object> insNewsType = service.insNewsType(data);
 			json = JSON.toJSONString(insNewsType);
@@ -188,12 +189,13 @@ public class NewsController extends HttpServlet {
 	private void selNewsTypeById(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String id = request.getParameter("id");
-		//System.err.println(id);
+		// System.err.println(id);
 		try {
 			Result<ArticleType> selNewsTypeById = StrUtil.isBlank(id)
 					? new Result<ArticleType>(Result.ERROR_4000, "参数错误")
 					: service.selNewsTypeById(id);
-			//System.err.println(selNewsTypeById.getCode() + selNewsTypeById.getMsg() + selNewsTypeById.getData());
+			// System.err.println(selNewsTypeById.getCode() + selNewsTypeById.getMsg() +
+			// selNewsTypeById.getData());
 			request.setAttribute("data", selNewsTypeById);
 		} catch (Exception e) {
 			request.setAttribute("data", new Result<>(Result.ERROR_6000, "查询特定的新闻分类异常"));
@@ -246,7 +248,7 @@ public class NewsController extends HttpServlet {
 		ArticleType data = new ArticleType();
 		try {
 			data.setId(Integer.parseInt(id));
-			data.setFid(Integer.parseInt(fid));
+			data.setFid(StrUtil.isBlank(fid) ? 0 : Integer.parseInt(fid));
 			data.setType_name(typeName);
 			data.setStatus(Integer.parseInt(status));
 			data.setSort(Integer.parseInt(sort));
@@ -273,7 +275,7 @@ public class NewsController extends HttpServlet {
 	private void delNewsType(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String id = request.getParameter("id");
 		String json = "";
-//		System.err.println(id);
+		// System.err.println(id);
 		try {
 			Result<Object> delNewsType = service.delNewsType(id);
 			json = JSON.toJSONString(delNewsType);
@@ -305,6 +307,8 @@ public class NewsController extends HttpServlet {
 		String tid = request.getParameter("tid");
 		String content = request.getParameter("content");
 		String mainContent = request.getParameter("main_content");
+		String type = request.getParameter("type");
+		String httpurl = request.getParameter("httpurl");
 		String status = request.getParameter("stauts");
 		String json = "";
 
@@ -313,9 +317,10 @@ public class NewsController extends HttpServlet {
 		data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
 		data.setMain_content(mainContent);
 		data.setContent(content);
+		data.setType(StrUtil.isBlank(type) ? 1 : Integer.parseInt(type));
+		data.setHttpurl(httpurl);
 		data.setManager_id(session.getAttribute("user_name").toString());
 		data.setStatus(StrUtil.isBlank(status) ? 1 : Integer.parseInt(status));
-		//System.err.println(data);
 		try {
 			Result<Object> insNews = service.insNews(data);
 			json = JSON.toJSONString(insNews);
@@ -344,7 +349,7 @@ public class NewsController extends HttpServlet {
 			String page = request.getParameter("page");
 			Article data = new Article();
 			data.setTitle(title);
-			Result<Page<Article>> selNews = service.selNews("10",StrUtil.isBlank(page)? "1":page,data);
+			Result<Page<Article>> selNews = service.selNews("10", StrUtil.isBlank(page) ? "1" : page, data);
 			request.setAttribute("data", selNews);
 		} catch (Exception e) {
 			log.error("查询新闻信息异常,:异常原因:【" + e.toString() + "】");
@@ -393,18 +398,21 @@ public class NewsController extends HttpServlet {
 		String tid = request.getParameter("tid");
 		String content = request.getParameter("content");
 		String mainContent = request.getParameter("main_content");
+		String type = request.getParameter("type");
+		String httpurl = request.getParameter("httpurl");
 		String status = request.getParameter("status");
 		String json = "";
 
-		Article data = new Article();
-		data.setId(Integer.parseInt(id));
-		data.setTitle(title);
-		data.setTid(Integer.parseInt(tid));
-		data.setMain_content(mainContent);
-		data.setContent(content);
-		data.setStatus(Integer.parseInt(status));
-		//System.err.println(data);
 		try {
+			Article data = new Article();
+			data.setId(Integer.parseInt(id));
+			data.setTitle(title);
+			data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
+			data.setMain_content(mainContent);
+			data.setContent(content);
+			data.setType(Integer.parseInt(type));
+			data.setHttpurl(httpurl);
+			data.setStatus(Integer.parseInt(status));
 			Result<Object> uptNews = service.uptNews(data);
 			json = JSON.toJSONString(uptNews);
 		} catch (Exception e) {
@@ -472,7 +480,6 @@ public class NewsController extends HttpServlet {
 			Map<String, Object> multipartData = IOUtil.getMultipartData2Bean(request, ArticleImg.class);// 获得文件流和普通表单JavaBean集合
 			List<InputStream> streams = (List<InputStream>) multipartData.get("stream");
 			ArticleImg data = (ArticleImg) multipartData.get("formField");
-			//System.err.println(data);
 			for (InputStream inputStream : streams) {
 				DefaultPutRet uploadImg;
 				uploadImg = QniuUtil.uploadImg(inputStream, prefixNewsImg + DateUtil.curDateYMDHMSSForService());
@@ -503,14 +510,14 @@ public class NewsController extends HttpServlet {
 
 	private void selNewsImg(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//System.err.println("dasds");
+		// System.err.println("dasds");
 		try {
 			String title = request.getParameter("title");
 			String page = request.getParameter("page");
 			ArticleImg data = new ArticleImg();
 			data.setTitle(title);
-			
-			Result<Page<ArticleImg>> selNewsImg = service.selNewsImg("10",StrUtil.isBlank(page)? "1":page,data);
+
+			Result<Page<ArticleImg>> selNewsImg = service.selNewsImg("10", StrUtil.isBlank(page) ? "1" : page, data);
 			request.setAttribute("data", selNewsImg);
 		} catch (Exception e) {
 			log.error("查询新闻信息异常,:异常原因:【" + e.toString() + "】");

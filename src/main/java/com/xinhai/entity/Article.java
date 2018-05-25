@@ -10,6 +10,8 @@ public class Article {
 	private String content;
 	private String main_content;
 	private String manager_id;
+	private int type;
+	private String httpurl;
 	private int status;
 	private Timestamp add_time;
 
@@ -78,6 +80,22 @@ public class Article {
 
 	public void setAdd_time(Timestamp add_time) {
 		this.add_time = add_time;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public String getHttpurl() {
+		return httpurl;
+	}
+
+	public void setHttpurl(String httpurl) {
+		this.httpurl = httpurl;
 	}
 
 	@Override

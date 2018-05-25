@@ -50,6 +50,19 @@ html {
 							</div>
 						</div>
 						<div class="field-box">
+							<label>新闻类型</label>
+							<div class="ui-select">
+								<select id="type" name="type">
+									<option value="1" selected="selected">内部新闻</option>
+									<option value="2">外部新闻</option>
+								</select>
+							</div>
+						</div>
+						<div class="field-box" id="http_url_input">
+							<label>引用外部链接:</label> <input class="span5 inline-input" id="httpurl"
+								type="text" name="httpurl" placeholder="请输入引用外部链接..." />
+						</div>
+						<div class="field-box">
 							<label>状态:</label> <label style="width: 20%;"><input
 								type="radio" name="status" value="1" checked="checked" />正常</label> <label
 								style="width: 20%; float: left;"><input type="radio"
@@ -94,7 +107,21 @@ html {
 					alert("服务未响应")
 				}
 			})
+			typeChange();
 		});
+		function typeChange(){
+			if($("#type").val()==1){
+				$("#http_url_input").css("display","none");
+				$("#httpurl").val("");
+			}else{
+				$("#http_url_input").css("display","block");
+			}
+			
+		}
+		
+		$("#type").on("change",function(){
+			typeChange();
+		})
 	
 		var index = parent.layer.getFrameIndex(window.name);
 		$("#sumbit_form").on("click",function(){

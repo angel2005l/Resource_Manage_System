@@ -142,9 +142,12 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("content", data.getContent()));
 		params.add(new BasicNameValuePair("main_content", data.getMain_content()));
+		params.add(new BasicNameValuePair("type", data.getType()+""));
+		params.add(new BasicNameValuePair("httpurl", data.getHttpurl()));
 		params.add(new BasicNameValuePair("manager_id", data.getManager_id()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("add_time", DateUtil.curDateYMDHMS()));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
@@ -197,7 +200,10 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("content", data.getContent()));
 		params.add(new BasicNameValuePair("main_content", data.getMain_content()));
+		params.add(new BasicNameValuePair("type", data.getType()+""));
+		params.add(new BasicNameValuePair("httpurl", data.getHttpurl()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(url, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		return 0 == jb.getIntValue("code") ? rtnSuccessResult("修改新闻成功")
