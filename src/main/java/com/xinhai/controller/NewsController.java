@@ -53,70 +53,54 @@ public class NewsController extends HttpServlet {
 		switch (mod) {
 		// 新闻类型部分
 		case "news_type_ins":
-			// 2
 			addNewsType(req, resp);
 			break;
 		case "news_type_sel":
-			// 1
 			selNewsType(req, resp);
 			break;
 		case "news_type_sel_id":
-			// 2
 			selNewsTypeById(req, resp);
 			break;
 		case "news_type_sel_id_typeName":
-			// 2
 			selNewsTypeIdAndTypeName(req, resp);
 			break;
 		case "news_type_upt":
-			// 2
 			uptNewsType(req, resp);
 			break;
 		case "news_type_del":
-			// 2
 			delNewsType(req, resp);
 			break;
 		case "news_ins":
-			// 2
 			addNews(req, resp);
 			break;
 		case "news_sel":
-			// 1
 			selNews(req, resp);
 			break;
 		case "news_sel_id":
-			// 2
 			selNewsById(req, resp);
 			break;
 		case "news_sel_id_name":
 			selNewsIdAndName(req, resp);
 			break;
 		case "news_upt":
-			// 2
 			uptNews(req, resp);
 			break;
 		case "news_del":
 			delNews(req, resp);
-			// 2
 			break;
 		case "news_img_ins":
-			// 2
 			insNewsImg(req, resp);
 			break;
 		case "news_img_sel":
-			// 1
 			selNewsImg(req, resp);
 			break;
 		case "news_img_sel_id":
-			// 2
 			selNewsImgById(req, resp);
 			break;
 		case "news_img_upt":
-			//
 			uptNewsImg(req, resp);
 			break;
 		case "news_img_del":
-			// 2
 			delNewsImg(req, resp);
 			break;
 		default:

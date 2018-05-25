@@ -29,9 +29,9 @@
 					<div class="pull-right">
 						<input type="text" class="search" name="title" placeholder="请输入产品图片标题关键字" /> 
 						<input type="hidden" id="pageNum" name="pageNum" value="${data.data.totalPage }">
-							<input type="hidden" id="page" name = "page" value="${data.data.page==0 ? 1: data.data.page}" /> <a
-								class="btn-flat success new-product" onclick="searchBtn('q')">查询</a><a
-							class="btn-flat success new-product" onclick="addProductType()">添加产品图片</a>
+						<input type="hidden" id="page" name = "page" value="${data.data.page==0 ? 1: data.data.page}" />
+							 <a class="btn-flat success new-product" onclick="searchBtn('q')">查询</a> 
+							 <a class="btn-flat success new-product" onclick="addProductType()">添加产品图片</a>
 					</div>
 					</form>
 				</div>

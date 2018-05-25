@@ -12,6 +12,7 @@ public class ProductImg implements Serializable {
 	private String img_url;
 	private String title;
 	private int is_main;
+	private int img_type;
 	private int status;
 	private int sort;
 
@@ -74,10 +75,18 @@ public class ProductImg implements Serializable {
 		this.sort = sort;
 	}
 
+	public int getImg_type() {
+		return img_type;
+	}
+
+	public void setImg_type(int img_type) {
+		this.img_type = img_type;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductImg [id=" + id + ", pid=" + pid + ", img_url=" + img_url + ", title=" + title + ", is_main="
-				+ is_main + ", status=" + status + ", sort=" + sort + "]";
+				+ is_main + ", img_type=" + img_type + ", status=" + status + ", sort=" + sort + "]";
 	}
 
 }

@@ -52,10 +52,7 @@ html {
 						</div>
 						<div class="field-box">
 							<label>产品详情</label>
-							<div class="wysi-column">
-									<textarea id="wysi" name="test" class="span7 wysihtml5" rows="5" placeholder="请输入产品详情"></textarea>
-								</div>
-							<!-- <textarea class="span5" name="info" rows="2" placeholder="请输入产品详情"></textarea> -->
+							<textarea class="span5" name="info" rows="2" placeholder="请输入产品详情"></textarea>
 						</div>
 						<div class="field-box">
 							<label>备注</label>

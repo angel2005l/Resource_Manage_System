@@ -53,59 +53,45 @@ public class ProductController extends HttpServlet {
 		String mod = req.getParameter("method");
 		switch (mod) {
 		case "product_type_ins":
-			// 2
 			insProductType(req, resp);
 			break;
 		case "product_type_sel":
-			// 1
 			selProductType(req, resp);
 			break;
 		case "product_type_sel_id":
-			// 2
 			selProductTypeById(req, resp);
 			break;
 		case "product_type_upt":
-			// 2
 			uptProductType(req, resp);
 			break;
 		case "product_type_del":
-			// 2
 			delProductType(req, resp);
 			break;
 		case "product_type_id_typeName":
-			// 2
 			selProductTypeIdAndTypeName(req, resp);
 			break;
 		case "product_ins":
-			// 2
 			insProduct(req, resp);
 			break;
 		case "product_sel":
-			// 1
 			selProduct(req, resp);
 			break;
 		case "product_sel_id":
-			// 2
 			selProductById(req, resp);
 			break;
 		case "product_upt":
-			// 2
 			uptProduct(req, resp);
 			break;
 		case "product_del":
-			// 2
 			delProduct(req, resp);
 			break;
 		case "product_id_productName":
-			// 2
 			selProductIdAndProductName(req, resp);
 			break;
 		case "product_img_ins":
-			// 2
 			insProductImg(req, resp);
 			break;
 		case "product_img_sel":
-			// 1
 			selProductImg(req, resp);
 			break;
 		// case "product_img_sel_pId":
@@ -117,7 +103,6 @@ public class ProductController extends HttpServlet {
 			uptProductImg(req, resp);
 			break;
 		case "product_img_del":
-			// 2
 			delProductImg(req, resp);
 			break;
 		default:
@@ -363,8 +348,6 @@ public class ProductController extends HttpServlet {
 	private void selProduct(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String parameter = request.getParameter("test");
-			System.err.println(parameter);
 			String product_name = request.getParameter("product_name");
 			String page = request.getParameter("page");
 			Product data = new Product();

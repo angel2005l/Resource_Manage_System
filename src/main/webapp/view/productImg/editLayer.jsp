@@ -41,13 +41,10 @@ html {
 							<label>序号:</label> <input class="span5 inline-input" type="text"
 								name="sort" value="${data.data.sort }" placeholder="请输入序号..." />
 						</div>
-						<div class="field-box" style="max-width:600px;max-height:300px;">
+						<div class="field-box">
 								<label>图片详情</label>
-                                <img src="<%=imgRootUrl %>${data.data.img_url }" />
+                                <img style="max-width:600px;max-height:300px;" src="<%=imgRootUrl %>${data.data.img_url }" />
                             </div>
-						<!-- <div class="field-box">
-							<label>图片文件:</label> <input type="file" name="img" />
-						</div> -->
 						<div class="field-box">
 							<label>所属产品</label>
 							<div class="ui-select">
@@ -56,11 +53,20 @@ html {
 								</select>
 							</div>
 						</div>
+						<div class="field-box">
+							<label>图片类型</label>
+							<div class="ui-select">
+								<select name="img_type">
+									<option value="1" <c:if test="${data.data.img_type == 1 }">selected="selected"</c:if> >产品图片</option>
+									<option value="2" <c:if test="${data.data.img_type == 2 }">selected="selected"</c:if> >产品详情</option>
+								</select>
+							</div>
+						</div>
 						<div class="field-box" style="height: 37px;">
 							<label>是否主图:</label> <label style="width: 20%;"><input
-								type="radio" name="is_main" value="1" />是</label> <label
+								type="radio" name="is_main" value="1" <c:if test="${data.data.is_main == 1 }"> checked="checked"</c:if> />是</label> <label
 								style="width: 20%; float: left;"><input type="radio"
-								name="is_main" value="0" checked="checked" />否</label>
+								name="is_main" value="0"  <c:if test="${data.data.is_main == 0 }"> checked="checked"</c:if> />否</label>
 						</div>
 					<div class="field-box">
 							<label>状态:</label> <label style="width: 20%;"><input

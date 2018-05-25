@@ -32,12 +32,12 @@ html {
 				<div class="span7 personal-info">
 					<form id="tableForm" enctype="multipart/form-data">
 						<div class="field-box">
-							<label>图片标题:</label> <input class="span5 inline-input" name="title"
-								type="text" placeholder="请输入图片标题..." />
+							<label>图片标题:</label> <input class="span5 inline-input"
+								name="title" type="text" placeholder="请输入图片标题..." />
 						</div>
 						<div class="field-box">
-							<label>序号:</label> <input class="span5 inline-input" type="text" name="sort"
-								placeholder="请输入序号..." />
+							<label>序号:</label> <input class="span5 inline-input" type="text"
+								name="sort" placeholder="请输入序号..." />
 						</div>
 						<div class="field-box">
 							<label>图片文件:</label> <input type="file" id="upLoad" name="img" />
@@ -47,6 +47,15 @@ html {
 							<div class="ui-select">
 								<select id="pid" name="pid">
 									<option value="" selected="selected">未绑定</option>
+								</select>
+							</div>
+						</div>
+						<div class="field-box">
+							<label>图片类型</label>
+							<div class="ui-select">
+								<select name="img_type">
+									<option value="1" selected="selected">产品图片</option>
+									<option value="2">产品详情图片</option>
 								</select>
 							</div>
 						</div>
@@ -66,8 +75,9 @@ html {
 							<i class="icon-exclamation-sign"></i>请认真填写产品图片信息
 						</div>
 						<div class="field-box actions">
-							<input id="sumbit_form" type="button" class="btn-flat primary" value="保存" /> <input
-								id="close_win" type="button" class="btn-flat danger" value="取消" />
+							<input id="sumbit_form" type="button" class="btn-flat primary"
+								value="保存" /> <input id="close_win" type="button"
+								class="btn-flat danger" value="取消" />
 						</div>
 					</form>
 				</div>
@@ -82,7 +92,7 @@ html {
 	$(function(){
 		var selectObj =$("#pid");
 		$.ajax({
-			url:'<%=basePath %>productManage?method=product_id_productName',
+			url:'<%=basePath%>productManage?method=product_id_productName',
 			type:'post',
 			dataType:'json',
 			async:false,
@@ -108,56 +118,47 @@ html {
 			var fileUrl =$("#upLoad").val();
 			 if(checkExcel(fileUrl)){
 				$("#tableForm").ajaxSubmit({
-				url:'<%=basePath %>productManage?method=product_img_ins',
+				url:'<%=basePath%>productManage?method=product_img_ins',
 				type:'post',
 				dataType : "json",
 				success:function(result){
 					alert(result.msg);
 					if(result.code == 0){
-						parent.location.href='<%=basePath %>productManage?method=product_img_sel';
+						parent.location.href='<%=basePath%>productManage?method=product_img_sel';
 						parent.layer.close(index);
-					}else{
-						return ;
-					}
-				},
-				error:function(){
-					alert("服务未响应");
+					} else {
+						return;
+						}
+					},
+					error : function() {
+						alert("服务未响应");
+						}
+					});
 				}
-			});
-			 }
-		});
+			 });
 		$("#close_win").on("click", function() {
 			parent.layer.close(index);
 		})
-			function checkExcel(fileUrl) {
-    //检查是否有空格，不允许文件名中存在空格
-    if (fileUrl.indexOf(" ") >= 0) {
-        alert("文件名不能有空格");
-        return false;
-    }
-    // 为了避免转义反斜杠出问题，这里将对其进行转换
-    var re = /(\\+)/g;
-    var filename = fileUrl.replace(re, "#");
-    // 对路径字符串进行剪切截取
-    var one = filename.split("#");
-    // 获取数组中最后一个，即文件名
-    var two = one[one.length - 1];
-    // 再对文件名进行截取，以取得后缀名
-    var three = two.split(".");
-    // 获取截取的最后一个字符串，即为后缀名
-    var last = three[three.length - 1];
-    // 添加需要判断的后缀名类型
-    var tp = "jpge,png";
-    // 返回符合条件的后缀名在字符串中的位置
-    var rs = tp.indexOf(last);
-    // 如果返回的结果大于或等于0，说明包含允许上传的文件类型
-    if (rs >= 0) {
-        return true;
-    } else {
-        alert("当前只支持文件扩展名为jpge/png的图片文件！");
-        return false;
-    }
-}
+		function checkExcel(fileUrl) {
+			if (fileUrl.indexOf(" ") >= 0) {
+				alert("文件名不能有空格");
+				return false;
+			}
+			var re = /(\\+)/g;
+			var filename = fileUrl.replace(re, "#");
+			var one = filename.split("#");
+			var two = one[one.length - 1];
+			var three = two.split(".");
+			var last = three[three.length - 1];
+			var tp = "jpge,png";
+			var rs = tp.indexOf(last);
+			if (rs >= 0) {
+				return true;
+			} else {
+				alert("当前只支持文件扩展名为jpge/png的图片文件！");
+				return false;
+			}
+		}
 	</script>
 </body>
 
