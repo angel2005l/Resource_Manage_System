@@ -49,7 +49,7 @@ html {
 						<div class="field-box">
 							<label>所属分类</label>
 							<div class="ui-select">
-								<select id="tid" name="tid">
+								<select id="tids" name="tid">
 									<option value="" selected="selected">请选择新闻分类</option>
 								</select>
 							</div>
@@ -58,14 +58,17 @@ html {
 							<label>新闻类型</label>
 							<div class="ui-select">
 								<select id="type" name="type">
-									<option value="1" <c:if test="${data.data.type ==1 }">selected="selected" </c:if>>内部新闻</option>
-									<option value="2" <c:if test="${data.data.type ==2 }">selected="selected" </c:if>>外部新闻</option>
+									<option value="1"
+										<c:if test="${data.data.type ==1 }">selected="selected" </c:if>>内部新闻</option>
+									<option value="2"
+										<c:if test="${data.data.type ==2 }">selected="selected" </c:if>>外部新闻</option>
 								</select>
 							</div>
 						</div>
 						<div class="field-box" id="http_url_input">
 							<label>引用外部链接:</label> <input class="span5 inline-input"
-								type="text" id="httpurl" name="httpurl" placeholder="请输入引用外部链接..." value="${data.data.httpurl }"/>
+								type="text" id="httpurl" name="httpurl"
+								placeholder="请输入引用外部链接..." value="${data.data.httpurl }" />
 						</div>
 						<div class="field-box">
 							<label>状态:</label> <label style="width: 20%;"><input
@@ -79,8 +82,9 @@ html {
 							<i class="icon-exclamation-sign"></i>请认真填写新闻信息
 						</div>
 						<div class="field-box actions">
-							<input id="sumbit_form" type="button" class="btn-flat primary" value="保存" /> <input
-								id="close_win" type="button" class="btn-flat danger" value="取消" />
+							<input id="sumbit_form" type="button" class="btn-flat primary"
+								value="保存" /> <input id="close_win" type="button"
+								class="btn-flat danger" value="取消" />
 						</div>
 					</form>
 				</div>
@@ -93,7 +97,7 @@ html {
 	<script type="text/javascript" src="<%=basePath%>js/jquery.form.js"></script>
 	<script>
 		$(function(){
-			var selectObj =$("#tid");
+			var selectObj =$("#tids");
 			$.ajax({
 				url:'<%=basePath%>newsManage?method=news_type_sel_id_typeName&id',
 				type:'post',
@@ -115,7 +119,17 @@ html {
 				}
 			});
 			typeChange();
+			$("#tids option").each(function(){
+				if(this.value == $("#tidCode").val()){
+					$(this).attr("selected", "selected");
+					return;
+				}
+			})
 		});
+		
+		
+		
+		
 		function typeChange(){
 			if($("#type").val()==1){
 				$("#http_url_input").css("display","none")
@@ -129,17 +143,10 @@ html {
 			typeChange();
 		})
 		
-		$("#tid option").each(function(){
-			if(this.value == $("#tidCode").val()){
-				 $(this).attr("selected","selected");
-				return;
-			}
-		})
-		
 		var index = parent.layer.getFrameIndex(window.name);
-		$("#sumbit_form").on("click",function(){
+		$("#sumbit_form").on("click",function() {
 			$("#tableForm").ajaxSubmit({
-				url:'<%=basePath%>newsManage?method=news_upt',
+				url : '<%=basePath%>newsManage?method=news_upt',
 				type:'post',
 				dataType:'json',
 				success:function(result){

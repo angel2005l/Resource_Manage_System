@@ -378,7 +378,7 @@ public class ProductController extends HttpServlet {
 		try {
 			Result<Product> selProductById = StrUtil.isBlank(id) ? new Result<Product>(Result.ERROR_4000, "参数错误")
 					: service.selProductById(id);
-			Result<List<Map<String, Object>>> selProductIdAndProductName = service.selProductIdAndProductName();
+			Result<List<Map<String, Object>>> selProductIdAndProductName = service.selProductTypeIdAndTypeName("");
 			request.setAttribute("select", selProductIdAndProductName);
 			request.setAttribute("data", selProductById);
 		} catch (Exception e) {
