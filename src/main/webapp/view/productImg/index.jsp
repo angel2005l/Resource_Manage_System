@@ -88,7 +88,7 @@
 			function addProductType() {
 				var index = layer.open({
 					type: 2,
-					title: '产品图片添加',
+					title: '添加产品图片',
 					area: ['400px', '530px'],
 					shadeClose: false, //点击遮罩关闭
 					content: 'view/productImg/addLayer.jsp'
@@ -99,7 +99,7 @@
 			function edit(id){
 				var index = layer.open({
 					type:2,
-					title:'产品图片修改',
+					title:'修改产品图片',
 					area: ['400px', '530px'],
 					shadeClose : false, //点击遮罩关闭
 					content: '<%=basePath%>productManage?method=product_img_sel_id&id='+id

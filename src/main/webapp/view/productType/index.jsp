@@ -90,7 +90,7 @@
 		function addProductType() {
 			layer.open({
 				type : 2,
-				title : '产品分类添加',
+				title : '添加产品分类',
 				area : [ '600px', '473px' ],
 				shadeClose : false, //点击遮罩关闭
 				content : 'view/productType/addLayer.jsp'
@@ -100,7 +100,7 @@
 		function edit(id){
 			layer.open({
 				type:2,
-				title:'产品分类修改',
+				title:'修改产品分类',
 				area : [ '600px', '473px' ],
 				shadeClose : false, //点击遮罩关闭
 				content: '<%=basePath %>productManage?method=product_type_sel_id&id='+id

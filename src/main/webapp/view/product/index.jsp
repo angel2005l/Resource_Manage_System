@@ -97,7 +97,7 @@
 		function addProduct() {
 			var index = layer.open({
 				type : 2,
-				title : '产品信息添加',
+				title : '添加产品信息',
 				area : [ '400px', '500px' ],
 				shadeClose : false, //点击遮罩关闭
 				content : 'view/product/addLayer.jsp'
@@ -107,7 +107,7 @@
 		function edit(id){
 			var index =layer.open({
 				type:2,
-				title:'产品分类修改',
+				title:'修改产品信息',
 				area : [ '400px', '500px' ],
 				shadeClose : false, //点击遮罩关闭
 				content: '<%=basePath %>productManage?method=product_sel_id&id='+id

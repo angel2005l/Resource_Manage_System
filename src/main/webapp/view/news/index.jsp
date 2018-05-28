@@ -107,7 +107,7 @@
 			function addNews() {
 				var index = layer.open({
 					type: 2,
-					title:'新闻信息添加',
+					title:'添加新闻信息',
 					area: ['400px', '500px'],
 					shadeClose: false, //点击遮罩关闭
 					content: 'view/news/addLayer.jsp'

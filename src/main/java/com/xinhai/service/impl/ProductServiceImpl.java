@@ -87,8 +87,8 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
-		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("修改产品分类成功")
-				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "修改产品分类失败" : jb.getString("msg"));
+		return 0 == code ? rtnSuccessResult("修改产品分类成功")
+				: rtnFailResult(code,jb.getString("msg"));
 	}
 
 	@Override
@@ -201,8 +201,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
-		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("修改产品信息成功")
-				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "修改产品信息失败" : jb.getString("msg"));
+		return 0 == code ? rtnSuccessResult("修改产品信息成功") : rtnFailResult(Result.ERROR_401, "修改产品信息失败");
 	}
 
 	@Override
@@ -320,12 +319,10 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("img_type", data.getImg_type() + ""));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
-		// System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
-		return 0 == code && jb.getIntValue("data") > 0 ? rtnSuccessResult("修改产品图片成功")
-				: rtnFailResult(code == 0 ? Result.ERROR_401 : code, code == 0 ? "修改产品图片失败" : jb.getString("msg"));
+		return 0 == code ? rtnSuccessResult("修改产品图片成功") : rtnFailResult(Result.ERROR_401, "修改产品图片失败");
 	}
 
 	@Override

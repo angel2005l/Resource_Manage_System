@@ -119,7 +119,7 @@ html {
 		})
 		
 		$("#pid option").each(function(){
-			if(this.value == $("#tidCode").val()){
+			if(this.value == $("#pidCode").val()){
 				 $(this).attr("selected","selected");
 				return;
 			}
