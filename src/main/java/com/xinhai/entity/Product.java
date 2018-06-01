@@ -7,6 +7,7 @@ public class Product {
 
 	private int id;
 	private int tid;
+	private int buy_id;
 	private String product_name;
 	private BigDecimal original_price;
 	private BigDecimal price;
@@ -34,6 +35,14 @@ public class Product {
 
 	public void setTid(int tid) {
 		this.tid = tid;
+	}
+
+	public int getBuy_id() {
+		return buy_id;
+	}
+
+	public void setBuy_id(int buy_id) {
+		this.buy_id = buy_id;
 	}
 
 	public String getProduct_name() {
@@ -110,9 +119,9 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", tid=" + tid + ", product_name=" + product_name + ", original_price="
-				+ original_price + ", price=" + price + ", item_no=" + item_no + ", info=" + info + ", remark=" + remark
-				+ ", add_time=" + add_time + ", status=" + status + ", sort=" + sort + "]";
+		return "Product [id=" + id + ", tid=" + tid + ", buy_id=" + buy_id + ", product_name=" + product_name
+				+ ", original_price=" + original_price + ", price=" + price + ", item_no=" + item_no + ", info=" + info
+				+ ", remark=" + remark + ", add_time=" + add_time + ", status=" + status + ", sort=" + sort + "]";
 	}
 
 }
