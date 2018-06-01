@@ -46,8 +46,8 @@
 							<tr>
 								<th class="span2">序号</th>
 								<th class="span2"><span class="line"></span>标题</th>
-								<th class="span2"><span class="line"></span>主要内容</th>
-								<th class="span1"><span class="line"></span>引用外部链接</th>
+<!-- 								<th class="span1"><span class="line"></span>引用外部链接</th>
+ -->								<th class="span3"><span class="line"></span>主要内容</th>
 								<th class="span2"><span class="line"></span>新闻类型</th>
 								<th class="span1"><span class="line"></span>状态</th>
 								<th class="span2"><span class="line"></span>添加时间</th>
@@ -60,8 +60,8 @@
 								<tr>
 									<td>${s.count }</td>
 									<td>${b.title }</td>
-									<td>${b.main_content }</td>
-									<td>${b.httpurl ==null || b.httpurl eq '' ? '无链接':b.httpurl }</td>
+<%-- 									<td>${b.httpurl ==null || b.httpurl eq '' ? '无链接':b.httpurl }</td>
+ --%>									<td>${b.main_content }</td>
 									<td><tag:enum className="NewsTypeEnum">${b.type }</tag:enum></td>
 									<td><span
 										<c:choose>

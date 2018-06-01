@@ -87,8 +87,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
-		return 0 == code ? rtnSuccessResult("修改产品分类成功")
-				: rtnFailResult(code,jb.getString("msg"));
+		return 0 == code ? rtnSuccessResult("修改产品分类成功") : rtnFailResult(code, jb.getString("msg"));
 	}
 
 	@Override
@@ -133,6 +132,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", parameter));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
+		params.add(new BasicNameValuePair("buy_id", data.getBuy_id() + ""));
 		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
 		params.add(new BasicNameValuePair("original_price", data.getOriginal_price().toString()));
 		params.add(new BasicNameValuePair("price", data.getPrice().toString()));
@@ -188,6 +188,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", parameter));
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
+		params.add(new BasicNameValuePair("buy_id", data.getBuy_id() + ""));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
 		params.add(new BasicNameValuePair("original_price", data.getOriginal_price().toString()));
@@ -198,7 +199,9 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		params.add(new BasicNameValuePair("add_time", DateUtil.curDateYMDHMS()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("sort", data.getSort() + ""));
+		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
+		System.err.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
 		return 0 == code ? rtnSuccessResult("修改产品信息成功") : rtnFailResult(Result.ERROR_401, "修改产品信息失败");

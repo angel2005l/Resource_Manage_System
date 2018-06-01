@@ -171,8 +171,9 @@ public class ProductController extends HttpServlet {
 			String page = request.getParameter("page");
 			ProductType data = new ProductType();
 			data.setType_name(type_name);
-			Result<Page<ProductType>> selProductType = service.selProductType("10", StrUtil.isBlank(page)? "1":page, data);
-			//System.err.println(selProductType);
+			Result<Page<ProductType>> selProductType = service.selProductType("10", StrUtil.isBlank(page) ? "1" : page,
+					data);
+			// System.err.println(selProductType);
 			request.setAttribute("data", selProductType);
 		} catch (Exception e) {
 			log.error("查询产品分类信息异常,异常原因:【" + e.toString() + "】");
@@ -305,6 +306,7 @@ public class ProductController extends HttpServlet {
 	 */
 	private void insProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String tid = request.getParameter("tid");
+		String buyId = request.getParameter("buy_id");
 		String productName = request.getParameter("product_name");
 		String originalPrice = request.getParameter("original_price");
 		String price = request.getParameter("price");
@@ -317,6 +319,7 @@ public class ProductController extends HttpServlet {
 		try {
 			Product data = new Product();
 			data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
+			data.setBuy_id(StrUtil.isBlank(buyId) ? 0 : Integer.parseInt(buyId));
 			data.setProduct_name(productName);
 			data.setOriginal_price(StrUtil.isBlank(originalPrice) ? BigDecimal.ZERO : new BigDecimal(originalPrice));
 			data.setPrice(StrUtil.isBlank(price) ? BigDecimal.ZERO : new BigDecimal(price));
@@ -352,7 +355,7 @@ public class ProductController extends HttpServlet {
 			String page = request.getParameter("page");
 			Product data = new Product();
 			data.setProduct_name(product_name);
-			Result<Page<Product>> selProduct = service.selProduct("10",StrUtil.isBlank(page)? "1":page,data);
+			Result<Page<Product>> selProduct = service.selProduct("10", StrUtil.isBlank(page) ? "1" : page, data);
 			request.setAttribute("data", selProduct);
 		} catch (Exception e) {
 			log.error("查询全部的产品信息异常,异常原因:【" + e.toString() + "】");
@@ -374,7 +377,7 @@ public class ProductController extends HttpServlet {
 	private void selProductById(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String id = request.getParameter("id");
-		//System.err.println(id);
+		// System.err.println(id);
 		try {
 			Result<Product> selProductById = StrUtil.isBlank(id) ? new Result<Product>(Result.ERROR_4000, "参数错误")
 					: service.selProductById(id);
@@ -401,6 +404,7 @@ public class ProductController extends HttpServlet {
 	private void uptProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String id = request.getParameter("id");
 		String tid = request.getParameter("tid");
+		String buyId = request.getParameter("buy_id");
 		String productName = request.getParameter("product_name");
 		String originalPrice = request.getParameter("original_price");
 		String price = request.getParameter("price");
@@ -415,6 +419,7 @@ public class ProductController extends HttpServlet {
 			Product data = new Product();
 			data.setId(Integer.parseInt(id));
 			data.setTid(Integer.parseInt(tid));
+			data.setBuy_id(Integer.parseInt(buyId));
 			data.setProduct_name(productName);
 			data.setOriginal_price(new BigDecimal(originalPrice));
 			data.setPrice(new BigDecimal(price));
@@ -506,7 +511,7 @@ public class ProductController extends HttpServlet {
 				uploadImg = QniuUtil.uploadImg(inputStream, prefixProductImg + DateUtil.curDateYMDHMSSForService());
 				ProductImg tempData = IOUtil.deepClone(data);
 				tempData.setImg_url(uploadImg.key);
-				//System.err.println(tempData);
+				// System.err.println(tempData);
 				Result<Object> result = service.insProductImg(tempData);
 				json = JSON.toJSONString(result);
 				if (result.getCode() != 0) {
@@ -548,12 +553,13 @@ public class ProductController extends HttpServlet {
 			String page = request.getParameter("page");
 			ProductImg data = new ProductImg();
 			data.setTitle(title);
-			Result<Page<ProductImg>> selProductImg = service.selProductImg("10",StrUtil.isBlank(page)? "1":page,data);
+			Result<Page<ProductImg>> selProductImg = service.selProductImg("10", StrUtil.isBlank(page) ? "1" : page,
+					data);
 			request.setAttribute("data", selProductImg);
 		} catch (Exception e) {
 			log.error("查询全部的产品图片异常,异常原因:【" + e.toString() + "】");
 		}
-		//System.err.println("dasd");
+		// System.err.println("dasd");
 		request.getRequestDispatcher("view/productImg/index.jsp").forward(request, response);
 	}
 
@@ -609,7 +615,7 @@ public class ProductController extends HttpServlet {
 		try {
 			ProductImg data = new ProductImg();
 			data.setId(Integer.parseInt(id));
-			data.setPid(StrUtil.isBlank(pid) ? 0:Integer.parseInt(pid));
+			data.setPid(StrUtil.isBlank(pid) ? 0 : Integer.parseInt(pid));
 			data.setTitle(title);
 			data.setIs_main(Integer.parseInt(isMain));
 			data.setImg_type(Integer.parseInt(imgType));

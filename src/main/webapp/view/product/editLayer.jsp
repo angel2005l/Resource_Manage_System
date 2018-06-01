@@ -45,6 +45,10 @@ html {
 								value="${data.data.item_no }" />
 						</div>
 						<div class="field-box">
+							<label>产品商城编码:</label> <input class="span5 inline-input"
+								name="buy_id" type="text" placeholder="请输入产品商城编码..." value="${data.data.buy_id }" />
+						</div>
+						<div class="field-box">
 							<label>产品原价:</label> <input class="span5 inline-input"
 								name="original_price" type="text" placeholder="请输入产品原价..."
 								value="${data.data.original_price }" />
@@ -75,7 +79,7 @@ html {
 									<option value="">请选择产品分类</option>
 									<c:forEach items="${select.data }" var="b">
 										<option value="${b.code }"
-											<c:if test="${b.code==data.data.id }">selected="selected"</c:if>>${b.value }</option>
+											<c:if test="${b.code==data.data.tid }">selected="selected"</c:if> >${b.value }</option>
 									</c:forEach>
 								</select>
 							</div>

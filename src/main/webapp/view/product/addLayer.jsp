@@ -39,6 +39,10 @@ html {
 								name="item_no" type="text" placeholder="请输入产品型号..." />
 						</div>
 						<div class="field-box">
+							<label>产品商城编码:</label> <input class="span5 inline-input"
+								name="buy_id" type="text" placeholder="请输入产品商城编码..." />
+						</div>
+						<div class="field-box">
 							<label>产品原价:</label> <input class="span5 inline-input"
 								name="original_price" type="text" placeholder="请输入产品原价..." />
 						</div>
