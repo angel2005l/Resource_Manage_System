@@ -1,4 +1,4 @@
-<%@ include file="/view/base/base.jsp" %>
+<%@ include file="base/base.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
