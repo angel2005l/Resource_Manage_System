@@ -7,7 +7,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	String imgRootUrl="http://p79n1su0z.bkt.clouddn.com/";
+	String imgRootUrl="http://img.cdn.xinhaimedical.cn/";
 %>
 <!DOCTYPE html>
 <html>
