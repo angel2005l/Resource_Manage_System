@@ -21,6 +21,8 @@ import com.xinhai.util.Page;
 import com.xinhai.util.Result;
 import com.xinhai.util.StrUtil;
 
+import sun.misc.BASE64Encoder;
+
 public class NewsServiceImpl extends BaseResult implements INewsService {
 	private ResourceBundle rb = ResourceBundle.getBundle("daoApi");
 
@@ -147,15 +149,19 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("parameter", parameter));
 		params.add(new BasicNameValuePair("title", data.getTitle()));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
-		params.add(new BasicNameValuePair("content", data.getContent()));
-		params.add(new BasicNameValuePair("main_content", data.getMain_content()));
+		BASE64Encoder base64 = new BASE64Encoder();
+		String content = base64.encodeBuffer(data.getContent().getBytes());
+		String  main_content = base64.encodeBuffer(data.getMain_content().getBytes());
+		params.add(new BasicNameValuePair("content", content));
+		params.add(new BasicNameValuePair("main_content", main_content));
 		params.add(new BasicNameValuePair("type", data.getType()+""));
 		params.add(new BasicNameValuePair("httpurl", data.getHttpurl()));
 		params.add(new BasicNameValuePair("manager_id", data.getManager_id()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
 		params.add(new BasicNameValuePair("add_time", DateUtil.curDateYMDHMS()));
-		//System.err.println(params);
+//		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
+//		System.err.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		int code = jb.getIntValue("code");
 
@@ -208,13 +214,17 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
 		params.add(new BasicNameValuePair("title", data.getTitle()));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
-		params.add(new BasicNameValuePair("content", data.getContent()));
-		params.add(new BasicNameValuePair("main_content", data.getMain_content()));
+		BASE64Encoder base64 = new BASE64Encoder();
+		String content = base64.encodeBuffer(data.getContent().getBytes());
+		String  main_content = base64.encodeBuffer(data.getMain_content().getBytes());
+		params.add(new BasicNameValuePair("content", content));
+		params.add(new BasicNameValuePair("main_content", main_content));
 		params.add(new BasicNameValuePair("type", data.getType()+""));
 		params.add(new BasicNameValuePair("httpurl", data.getHttpurl()));
 		params.add(new BasicNameValuePair("status", data.getStatus() + ""));
-		//System.err.println(params);
+//		System.err.println(params);
 		String resultJson = HttpClientUtil.getPostDefault(root, params);
+//		System.err.println(resultJson);
 		JSONObject jb = JSON.parseObject(resultJson);
 		return 0 == jb.getIntValue("code") ? rtnSuccessResult("修改新闻成功")
 				: rtnFailResult(Result.ERROR_401, "修改新闻失败，失败原因【" + jb.getString("msg") + "】");
@@ -347,4 +357,5 @@ public class NewsServiceImpl extends BaseResult implements INewsService {
 				: rtnFailResult(jb.getIntValue("code"), "删除新闻图片失败，失败原因【" + jb.getString("msg") + "】");
 	}
 
+	
 }
