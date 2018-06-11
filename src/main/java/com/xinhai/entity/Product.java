@@ -7,7 +7,7 @@ public class Product {
 
 	private int id;
 	private int tid;
-	private int buy_id;
+	private String buy_id;
 	private String product_name;
 	private BigDecimal original_price;
 	private BigDecimal price;
@@ -37,11 +37,11 @@ public class Product {
 		this.tid = tid;
 	}
 
-	public int getBuy_id() {
+	public String getBuy_id() {
 		return buy_id;
 	}
 
-	public void setBuy_id(int buy_id) {
+	public void setBuy_id(String buy_id) {
 		this.buy_id = buy_id;
 	}
 

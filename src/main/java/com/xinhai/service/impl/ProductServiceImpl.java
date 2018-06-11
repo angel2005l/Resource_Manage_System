@@ -132,7 +132,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", parameter));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
-		params.add(new BasicNameValuePair("buy_id", data.getBuy_id() + ""));
+		params.add(new BasicNameValuePair("buy_id", data.getBuy_id()));
 		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
 		params.add(new BasicNameValuePair("original_price", data.getOriginal_price().toString()));
 		params.add(new BasicNameValuePair("price", data.getPrice().toString()));
@@ -188,7 +188,7 @@ public class ProductServiceImpl extends BaseResult implements IProductService {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("parameter", parameter));
 		params.add(new BasicNameValuePair("id", data.getId() + ""));
-		params.add(new BasicNameValuePair("buy_id", data.getBuy_id() + ""));
+		params.add(new BasicNameValuePair("buy_id", data.getBuy_id()));
 		params.add(new BasicNameValuePair("tid", data.getTid() + ""));
 		params.add(new BasicNameValuePair("product_name", data.getProduct_name()));
 		params.add(new BasicNameValuePair("original_price", data.getOriginal_price().toString()));

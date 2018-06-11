@@ -319,7 +319,7 @@ public class ProductController extends HttpServlet {
 		try {
 			Product data = new Product();
 			data.setTid(StrUtil.isBlank(tid) ? 0 : Integer.parseInt(tid));
-			data.setBuy_id(StrUtil.isBlank(buyId) ? 0 : Integer.parseInt(buyId));
+			data.setBuy_id(buyId);
 			data.setProduct_name(productName);
 			data.setOriginal_price(StrUtil.isBlank(originalPrice) ? BigDecimal.ZERO : new BigDecimal(originalPrice));
 			data.setPrice(StrUtil.isBlank(price) ? BigDecimal.ZERO : new BigDecimal(price));
@@ -419,7 +419,7 @@ public class ProductController extends HttpServlet {
 			Product data = new Product();
 			data.setId(Integer.parseInt(id));
 			data.setTid(Integer.parseInt(tid));
-			data.setBuy_id(Integer.parseInt(buyId));
+			data.setBuy_id(buyId);
 			data.setProduct_name(productName);
 			data.setOriginal_price(new BigDecimal(originalPrice));
 			data.setPrice(new BigDecimal(price));
